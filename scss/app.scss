@@ -62,3 +62,56 @@
 // Motion UI
 @include motion-ui-transitions;
 @include motion-ui-animations;
+
+.align-center{
+	text-align: center;
+	justify-content: center
+}
+
+$monOrange: orange;
+$monBlanc: #FFFFFF;
+$bordure-Orange: 3px solid $monOrange;
+
+/*----------------------------------------------------------------------
+						MENU PRINCIPAL
+------------------------------------------------------------------------*/
+
+.top-bar
+{
+		border-bottom:$bordure-Orange
+}
+
+.menu a 
+{
+	&:hover
+	{
+		background-color:$monBlanc;		
+		transition: all 0.5s ease;
+	}
+}
+.anim-menu 
+{
+	width: 100%;
+	.menu .mon-effet 
+	{
+		position: relative;
+		&::after 
+		{
+			content: "";
+			position: absolute;
+			top: calc(100% - 0.125rem);
+			border-bottom: 0.125rem solid $monBlanc;
+			left: 50%;
+			right:50%;
+			margin:0;
+			transition: all 0.5s ease;
+		}
+		&:hover::after 
+		{
+		left: 0%;
+		right:0%;
+		transition: all 0.5s ease;
+		border-bottom: 0.125rem solid $monBlanc;
+		}	
+	}
+}
