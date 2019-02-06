@@ -96,7 +96,7 @@ $global-weight-bold: bold;
 $global-radius: 0;
 //-------------------ESPACEMENT <li> MENU PRINCIPAL ---------------//
 //$global-menu-padding: 0.7rem 1rem;
-$global-menu-padding: 1.2rem 5rem;
+$global-menu-padding: 0.7rem 5rem;
 //-----------------------------------------------------------------//
 $global-menu-nested-margin: 1rem;
 $global-text-direction: ltr;
@@ -542,8 +542,8 @@ $orbit-bullet-margin: 0.1rem;
 /*----------------------------------GESTIONS DES PUCES-----------------------------*/
 //$orbit-bullet-margin-top: 0.8rem;
 $orbit-bullet-margin-top: -7rem;
-/*---------------------------------------------------------------------------------*/
-$orbit-bullet-margin-bottom: 0.8rem;
+//$orbit-bullet-margin-bottom: 0.8rem;
+$orbit-bullet-margin-bottom: 5rem;
 /*-----------------------------GESTIONS COULEURS PUCES-----------------------------*/
 //$orbit-caption-background: rgba($black, 0.5);
 $orbit-caption-background: rgba($monbleu, 0.5);
