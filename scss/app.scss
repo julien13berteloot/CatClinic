@@ -63,14 +63,27 @@
 @include motion-ui-transitions;
 @include motion-ui-animations;
 
+
+
+$monOrange: orange;
+$monBlanc: #FFFFFF;
+
 .align-center{
 	text-align: center;
 	justify-content: center
 }
+.ma_margin
+{
+	margin: auto;
+}
+.typo_blanc
+{
+	color:$white;
+}
 
-$monOrange: orange;
-$monBlanc: #FFFFFF;
 $bordure-Orange: 3px solid $monOrange;
+$bordure-Bleu: 0.1em solid $monbleu;
+$bordure-Blanc: 0.125rem solid $white;
 
 /*----------------------------------------------------------------------
 						MENU PRINCIPAL
@@ -121,7 +134,18 @@ $bordure-Orange: 3px solid $monOrange;
 {
 	border-bottom:$bordure-Orange;
 }
-
+/*----------------------------------------------------------------------
+						CELLULE
+------------------------------------------------------------------------*/
+.ma_cellule_bleu
+{
+	margin-bottom:3px;
+	background-color:$monbleu;
+	padding-top: 50px; 
+	padding-bottom:80px;
+	border-top: $bordure-Orange;  
+	border-bottom: $bordure-Orange;
+}
 
 
 
