@@ -96,6 +96,7 @@ $global-position: 1rem;
 $global-weight-normal: normal;
 $global-weight-bold: bold;
 $global-radius: 0;
+$global-radius-mon-bouton: 10px;
 //-------------------ESPACEMENT <li> MENU PRINCIPAL ---------------//
 //$global-menu-padding: 0.7rem 1rem;
 $global-menu-padding: 0.7rem 5rem;
@@ -296,11 +297,11 @@ $button-font-family: inherit;
 $button-padding: 0.85em 1em;
 $button-margin: 0 0 $global-margin 0;
 $button-fill: solid;
-$button-background: $primary-color;
-$button-background-hover: scale-color($button-background, $lightness: -15%);
+$button-background: $monbleu;
+$button-background-hover: $white;
 $button-color: $white;
 $button-color-alt: $black;
-$button-radius: $global-radius;
+$button-radius: $global-radius-mon-bouton;
 $button-hollow-border-width: 1px;
 $button-sizes: (
   tiny: 0.6rem,
