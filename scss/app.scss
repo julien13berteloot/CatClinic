@@ -139,16 +139,29 @@ $bordure-Blanc: 0.125rem solid $white;
 ------------------------------------------------------------------------*/
 .ma_cellule_bleu
 {
-	margin-bottom:3px;
+	//margin-bottom:3px;
 	background-color:$monbleu;
 	padding-top: 50px; 
 	padding-bottom:80px;
+	border-top: $bordure-Orange;  
+	//border-bottom: $bordure-Orange;
+}
+.ma_cellule_gris
+{
+	margin-bottom:3px;
+	background-color:$monGris;
+	padding: 50px 0;
 	border-top: $bordure-Orange;  
 	border-bottom: $bordure-Orange;
 }
 .ma_cellule_blanc
 {
 	background-color:$white;
+}
+.bordure-bleu-badge
+{
+	border:$bordure-Bleu;
+	margin-bottom:10px;
 }
 /*----------------------------------------------------------------------
 						ASIDE
