@@ -146,7 +146,17 @@ $bordure-Blanc: 0.125rem solid $white;
 	border-top: $bordure-Orange;  
 	border-bottom: $bordure-Orange;
 }
-
+.ma_cellule_blanc
+{
+	background-color:$white;
+}
+/*----------------------------------------------------------------------
+						ASIDE
+------------------------------------------------------------------------*/
+aside
+{
+	background-color:$monGris;
+}
 
 
 
