@@ -89,7 +89,18 @@
 					<div class="sticky" data-sticky data-margin-top="5" data-top-anchor="id_sticky_aside:top">
 						<div class="grid-x ">
 							<div class="cell large-12;">
-									<h2 class="callout">Titres</h2>	
+								<h2 class="callout">Section</h2>	
+							</div>
+							<div class="cell large-12">
+								<ul data-magellan>
+									<li><a href="#first">La clinique</a></li>
+									<li><a href="#second">Services</a></li>
+									<li><a href="#third">Fiches</a></li>
+									<li><a href="#four">Employers</a></li>
+								</ul>
+							</div>
+							<div class="cell large-12;">
+								<h2 class="callout">Titres</h2>	
 							</div>
 							<div class="cell large-12 ma_cellule_blanc">
 								<ul>
@@ -138,7 +149,7 @@
 				<!-- Right -->
 				<div id="id_sticky_content" class="cell large-9">
 				
-					<div class="grid-x ma_cellule_bleu">
+					<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first" style="padding:50px 0;">
 						<div class="cell text-center">
 							<header>
 								<h1>La clinique</h1>
@@ -155,8 +166,7 @@
 						</div>			
 					</div>
 					
-					
-					<div class="grid-x ma_cellule_gris">
+					<div class="grid-x ma_cellule_gris" id="second" data-magellan-target="second" style="padding:50px 0;">
 						<div class="cell text-center">
 							<header>
 								<h1>Services</h1>
@@ -191,7 +201,7 @@
 						</div>	
 					</div>
 					
-					<div class="grid-x grid-margin-x">
+					<div class="grid-x grid-margin-x" id="third" data-magellan-target="third" style="padding:50px 0;">
 						<div class="cell text-center">
 							<header>
 								<h1>Fiches</h1>
