@@ -1,0 +1,99 @@
+<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first">
+	<div class="cell text-center">
+		<header>
+			<h1>Connexion Administration</h1>
+		</header>	
+	</div>								
+</div>
+<form data-abide novalidate action="../Php/index.php" method="post">
+	<div data-abide-error class="alert callout" style="display: none;">
+		<p><i class="fi-alert"></i>Login ou Mot de passe incorrect.</p>
+	</div>
+	<div class="grid-x ma_cellule_gris" style="">
+		<div class="cell large-8 large-offset-2">
+			<div class="grid-x">
+				<input type="hidden" name="EX" value="connect" />
+				<div class="small-2 cell">
+					<label for="login" class="text-left middle">Login</label>
+				</div>
+				<div class="small-10 cell">			
+					<input class="" id="login" name="LOGIN" value="" type="text" placeholder="login" 
+					aria-describedby="exampleLogin" aria-errormessage="exampleErrorLogin" required pattern="text">
+					<span class="form-error" id="exampleErrorLogin">
+						Required!
+					</span>	
+					<p class="help-text" id="exampleLogin">Entrer un login.</p>		
+				</div>
+				
+				<div class="small-2 cell">
+					<label for="pwd" class="text-left middle">Mot de passe</label>
+				</div>
+				<div class="small-10 cell">			
+					<input id="pwd" name="PASSWORD" value="" type="text" placeholder="Mot de passe"
+					aria-describedby="examplePass" aria-errormessage="exampleErrorPass" required pattern="text">
+					<span class="form-error" id="exampleErrorPass">
+						Required!
+					</span>	
+					<p class="help-text" id="exampleLogin">Entrer un Mot de passe.</p>	
+				</div>	
+			</div>
+		</div>
+		
+		<div class="cell large-12" style="">
+			<div class="grid-x">
+				<div class="cell large-3 large-offset-2" style="">
+					<button class="button large" type="submit" value="Submit">Ok</button>
+				</div>
+				<div class="cell large-7" style="">
+					<button class="button large" type="reset" value="Reset">Annuler</button>
+				</div>
+			</div>		
+		</div>
+		
+
+	</div>
+</form>
+
+
+
+
+
+<!--
+<form id="user" action="../Php/index.php" method="post">
+ <fieldset>
+  <legend>Connexion</legend>
+  <input type="hidden" name="EX" value="connect" />
+  <p>
+   <label for="login">Login</label>
+   <input id="login" class="required" name="LOGIN" value="" size="10" maxlength="10" />
+  </p>
+  <p>
+   <label for="pwd">Mot de passe</label>
+   <input id="pwd" class="required" type="password" name="PASSWORD" value="" size="10" maxlength="10" />
+  </p>
+  <p>
+   <input type="submit" value="Ok" />
+  </p>
+ </fieldset>
+</form>
+-->
+
+<!--
+<form id="user" action="../Php/index.php" method="post">
+ <fieldset>
+  <legend>Connexion</legend>
+  <input type="hidden" name="EX" value="connect" />
+  <p>
+   <label for="login">Login</label>
+   <input id="login" class="required" name="LOGIN" value="" size="10" maxlength="10" />
+  </p>
+  <p>
+   <label for="pwd">Mot de passe</label>
+   <input id="pwd" class="required" type="password" name="PASSWORD" value="" size="10" maxlength="10" />
+  </p>
+  <p>
+   <input type="submit" value="Ok" />
+  </p>
+ </fieldset>
+</form>
+-->

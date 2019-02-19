@@ -8,10 +8,13 @@
 
 global $content;
 $vmenu = new VMenu();
+$vfooter = new VFooter();
+$caroussel = new VCaroussel();
 $vcontent = new $content['class']();
+$vaside = new VAside();
 ?>
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="fr">
 <head>
 	<meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -23,13 +26,20 @@ $vcontent = new $content['class']();
 
 <body>
 
-	<!--<nav>-->
-		<?php $vmenu->showMenu() ?>
-	<!--</nav>-->
+	<?php $vmenu->showMenu() ?>
 
-	<!--<div id="content">-->	
-		<?php $vcontent->{$content['method']}($content['arg']) ?>
-	<!--</div>--><!-- id="content" -->
+	<?php $caroussel->showCaroussel() ?>
+	
+	<div id="id_sticky_aside" class="grid-x ma-grille-principal">
+		<aside class="cell large-3 right" data-sticky-container>
+			<?php $vaside->showAside()?>
+		</aside> <!-- END aside -->
+		<div id="id_sticky_content" class="cell large-9">
+			<?php $vcontent->{$content['method']}($content['arg']) ?>	
+		</div> <!-- END Contenu Droite -->
+	</div> <!-- END grid-x -->
+	
+	<?php $vfooter->showFooter() ?>
  
 	<script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/what-input/dist/what-input.js"></script>

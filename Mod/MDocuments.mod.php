@@ -69,6 +69,24 @@ class MDocuments
   
 	} // SetValue($_value)
 	
+	
+	public function SelectDocument()
+	{
+		$query = 	'select ID_DOC, TITRE, DOCUMENTS
+					from DOCUMENTS
+					where ID_DOC = :ID_DOC';
+  
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_DOC', $this->id_doc, PDO::PARAM_INT);
+    
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		return $result->fetch();
+  
+	} // SelectDocument()
+	
+	
 	public function SelectAllDocument()
 	{
 		$query =	'select ID_DOC,
@@ -88,9 +106,10 @@ class MDocuments
    
 	} // SelectAllDocument()
 	
+	
 	public function SelectAllFicheDocument()
 	{
-		$query = 	'select D.ID_DOC, TITRE, AUTEUR, FICHIER, DOCUMENTS, F.ID_FICHE, F.FICHE_TITRE
+		$query = 	'select D.ID_DOC, TITRE, DOCUMENTS, F.ID_FICHE, F.FICHE_TITRE
 					from DOCUMENTS D, FICHES_DOCUMENTS FD, FICHES F
 					where FD.ID_DOC = D.ID_DOC
 					and FD.ID_FICHE = F.ID_FICHE
@@ -107,22 +126,122 @@ class MDocuments
 	} // SelectAllFicheDocument()
 	
 	
-/*	
-	public function Select()
+	public function SelectAll()
 	{
-		$query = 	'select ID_DOC, TITRE, AUTEUR, FICHIER, DOCUMENTS
-					from DOCUMENTS
+		$query = 	'select D.ID_DOC, TITRE, DOCUMENTS, ID_FICHE
+					from DOCUMENTS D, FICHES_DOCUMENTS FD
+					where FD.ID_DOC = D.ID_DOC
+					and FD.ID_FICHE = :ID_FICHE
+					order by TITRE';
+
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_FICHE', $this->value['ID_FICHE'], PDO::PARAM_INT);
+  	 
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return $result->fetchAll();
+   
+	} // SelectAll()
+	
+	
+	public function SelectFichesDocuments()
+	{
+		$query = 	'select ID_FICHE
+					from FICHES_DOCUMENTS
 					where ID_DOC = :ID_DOC';
   
 		$result = $this->conn->prepare($query);
 
-		$result->bindValue(':ID_DOC', $this->id_doc, PDO::PARAM_INT);
+		$result->bindValue(':ID_DOC',$this->id_doc, PDO::PARAM_INT);
+   	 
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return $result->fetchAll();
+  
+	} // SelectFichesDocuments()
+	
+	
+	public function InsertDocument()
+	{
+		/*
+		insert into DOCUMENTS (TITRE,DOCUMENTS)
+					values("WOW","bb")
+		
+		$query = 'insert into DOCUMENTS (TITRE, AUTEUR, FICHIER)
+              values(:TITRE, :AUTEUR, :FICHIER)';
+
+		$result = $this->conn->prepare($query);
     
+		$result->bindValue(':TITRE',$this->value['TITRE'], PDO::PARAM_STR);
+		$result->bindValue(':AUTEUR',$this->value['AUTEUR'], PDO::PARAM_STR);
+		$result->bindValue(':FICHIER',$this->value['FICHIER'], PDO::PARAM_STR);
+     
 		$result->execute() or die ($this->ErrorSQL($result));
     
-		return $result->fetch();
+		$this->id_doc = $this->conn->LastInsertId();
+ 
+		return $this->id_doc;
+		*/
+		$query = 	'insert into DOCUMENTS (TITRE, DOCUMENTS)
+					values(:TITRE, DOCUMENTS)';
+					
+		$result = $this->conn->prepare($query);
+    
+		$result->bindValue(':TITRE',$this->value['TITRE'], PDO::PARAM_STR);
+		$result->bindValue(':DOCUMENTS',$this->value['DOCUMENTS'], PDO::PARAM_STR);
+
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		$this->id_doc = $this->conn->LastInsertId();
+ 
+		return $this->id_doc;	
+	}
+
+
+	public function InsertFichesDocuments()
+	{
+		$query = 	'insert into FICHES_DOCUMENTS (ID_FICHE, ID_DOC)
+					values(:ID_FICHE, :ID_DOC)';
+					
+		$result = $this->conn->prepare($query);
+		
+		$result->bindValue(':ID_FICHE',$this->value['ID_FICHE'], PDO::PARAM_INT);
+		$result->bindValue(':ID_DOC',$this->id_doc, PDO::PARAM_INT);
+		
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return;
+	}		
+	
+	
+/*	
+	
+	public function InsertThemesDocuments()
+  {
+  	$query = 'insert into THEMES_DOCUMENTS (ID_DOC, ID_THEME)
+              values(:ID_DOC, :ID_THEME)';
   
-	} // Select()
+  	$result = $this->conn->prepare($query);
+  
+  	$result->bindValue(':ID_DOC',$this->id_doc, PDO::PARAM_INT);
+  	$result->bindValue(':ID_THEME',$this->value['ID_THEME'], PDO::PARAM_INT);
+   	 
+  	$result->execute() or die ($this->ErrorSQL($result));
+  	
+  	return;
+  
+  } // InsertThemesDocuments()
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
 */
 /*	
 	public function Tout()
@@ -181,23 +300,7 @@ select ID_DOC, TITRE, AUTEUR, FICHIER, DOCUMENTS
    * @return array tuples de la table DOCUMENTS
    */
 /*   
-	public function SelectAll()
-	{
-		$query = 	'select D.ID_DOC, TITRE, AUTEUR, FICHIER, DOCUMENTS, ID_FICHE
-					from DOCUMENTS D, FICHES_DOCUMENTS FD
-					where FD.ID_DOC = D.ID_DOC
-					and FD.ID_FICHE = :ID_FICHE
-					order by TITRE';
-
-		$result = $this->conn->prepare($query);
-
-		$result->bindValue(':ID_FICHE', $this->value['ID_FICHE'], PDO::PARAM_INT);
-  	 
-		$result->execute() or die ($this->ErrorSQL($result));
-  	
-		return $result->fetchAll();
-   
-	} // SelectAll()
+	
 */ 
 /*
 	public function SelectAllSimple()

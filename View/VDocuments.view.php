@@ -25,35 +25,7 @@ class VDocuments
 	* @return none
 	*/
 	public function showDocAccueil($_data)
-	{
-		// ASIDE - Les fiches par titres
-		$fiches_titres = '';
-		foreach ($_data['FICHES_TITRES'] as $val)
-		{			
-			if (isset($_SESSION['ADMIN']))
-			{
-				$href = '';
-			}
-			else
-			{
-				$href = '../Php/index.php?EX=document&amp;ID_FICHE='.$val['ID_FICHE'].'&amp;FICHE_TITRE='.$val['FICHE_TITRE'];
-			}			
-			$fiches_titres .= '<li><a  href="'.$href.'">'.$val['FICHE_TITRE'].'</a></li>';			
-		}
-		// ASIDE - Les documents 
-		$fiches_documents = '';
-		foreach ($_data['DOCUMENTS'] as $val)
-		{			
-			if (isset($_SESSION['ADMIN']))
-			{
-				$href = '';
-			}
-			else
-			{
-				$href = '../Php/index.php?EX=doc&amp;ID_DOC='.$val['ID_DOC'];
-			}			
-			$fiches_documents .= '<li><a href="'.$href.'">'.$val['TITRE'].'</a></li>';			
-		}
+	{		
 		// Contenu droite - Rubrique Fiches
 		$last_rubrique ='';
 		foreach ($_data['DOCUMENTS_FICHE'] as $val)
@@ -68,9 +40,7 @@ class VDocuments
 					</a>
 					<div class="conteneur-card">
 						<div class="card-section text-center">
-							<a href="">
-								<h2 class="card-title"><a href="../Php/index.php?EX=doc&amp;ID_FICHE='.$val['ID_FICHE'].'">'.$val['FICHE_TITRE'].'</h2>
-							</a>
+							<h2 class="card-title"><a href="../Php/index.php?EX=doc&amp;ID_FICHE='.$val['ID_FICHE'].'">'.$val['FICHE_TITRE'].'</a></h2>
 							<h3 class="h5">'.$val['TITRE'].'</h3>
 							<p class="card-texte">'.$val['DOCUMENTS'].'</p>
 						</div>
@@ -91,7 +61,7 @@ class VDocuments
 		foreach($_data['EMPLOYER_DOCTEUR'] as $val)
 		{
 			$nom_employer = '<td>' . $val['NOM'].'</td>';
-			$prenom_employer = '<td>' . $val['PRENOM'].'<td>';
+			$prenom_employer = '<td>' . $val['PRENOM'].'</td>';
 			$structure_docteur .= '<tr>' . $nom_employer . $prenom_employer . '</tr>';
 		}
 		// Contenu droite - Rubrique Employers - AVS
@@ -102,118 +72,33 @@ class VDocuments
 		foreach($_data['EMPLOYER_AVS'] as $val)
 		{
 			$nom_employee = '<td>' . $val['NOM'].'</td>';
-			$prenom_employee = '<td>' . $val['PRENOM'].'<td>';
+			$prenom_employee = '<td>' . $val['PRENOM'].'</td>';
 			$structure_avs .= '<tr>' . $nom_employee . $prenom_employee . '</tr>';
 		}
+		// Contenu - Rubrique Les Specilaites
+		$specialites = '';
+		foreach ($_data['SPECIALITES'] as $val)
+		{
+			$specialites .= '<div class="masonry-css-item">
+								<div class="callout">'
+									.$val['NOM_SPECIALITES'].
+								'</div>
+							</div>';			
+		}
 		
-		// Caroussel
-		echo '
-		<div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
-			<div class="orbit-wrapper">
-				<div class="orbit-controls">
-				  <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
-				  <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
-				</div>
-				<ul class="orbit-container">
-					<li class="is-active orbit-slide">
-						<figure class="orbit-figure">
-							<img class="orbit-image" src="https://placehold.it/1200x600/999?text=Slide-1" alt="Space">
-							<figcaption class="orbit-caption">Space, the final frontier.</figcaption>
-						</figure>
-					</li>
-					<li class="orbit-slide">
-						<figure class="orbit-figure">
-							<img class="orbit-image" src="https://placehold.it/1200x600/888?text=Slide-2" alt="Space">
-							<figcaption class="orbit-caption">Lets Rocket!</figcaption>
-						</figure>
-					</li>
-					<li class="orbit-slide">
-						<figure class="orbit-figure">
-							<img class="orbit-image" src="https://placehold.it/1200x600/777?text=Slide-3" alt="Space">
-							<figcaption class="orbit-caption">Encapsulating</figcaption>
-						</figure>
-					</li>
-					<li class="orbit-slide">
-						<figure class="orbit-figure">
-							<img class="orbit-image" src="https://placehold.it/1200x600/666&text=Slide-4" alt="Space">
-							<figcaption class="orbit-caption">Outta This World</figcaption>
-						</figure>
-					</li>
-				</ul>
-			</div>
-			<nav class="orbit-bullets">
-				<button class="is-active" data-slide="0"><span class="show-for-sr">First slide details.</span><span class="show-for-sr">Current Slide</span></button>
-				<button data-slide="1"><span class="show-for-sr">Second slide details.</span></button>
-				<button data-slide="2"><span class="show-for-sr">Third slide details.</span></button>
-				<button data-slide="3"><span class="show-for-sr">Fourth slide details.</span></button>
-			</nav>
-		</div>
-		';
+		
 		
 		// Aside	
-		echo '			
-		<div id="id_sticky_aside" class="grid-x">
-
-			<aside class="cell large-3 right" data-sticky-container>
-				<div class="sticky" data-sticky data-margin-top="5" data-top-anchor="id_sticky_aside:top">
-					<div class="grid-x ">
-						<div class="cell large-12;">
-							<h2 class="callout">Titres</h2>	
-						</div>
-						<div class="cell large-12 ma_cellule_blanc">					
-		';
-								echo <<<HERE
-								<ul>
-									$fiches_titres
-								</ul>
-HERE;
 		echo '
-						</div>
-						<div  class="cell large-12">
-								<h2 class="callout">Documents</h2>	
-							</div>
-							<div class="cell large-12">
-		';						
-									echo <<<HERE
-									<ul>
-										$fiches_documents		
-									</ul>
-HERE;
-		echo '						
-							</div>
-							<div  class="cell large-12">
-								<h2 class="callout">Auteurs</h2>	
-							</div>
-							<div class="cell large-12 ma_cellule_blanc">
-								<dl>
-									<dt>
-										Remain, André
-									</dt>
-										<dd>
-											Administration des médicaments
-										</dd>
-										<dd>
-											Les dangers domestiques
-										</dd>									
-									<dt>
-										Burlotte, Sylvie
-									</dt>
-										<dd>
-											Maladies et vaccination
-										</dd>
-								</dl>
-							</div>
-						</div>
-					</div>		
-			</aside>
+		<!-- GRILLE PRINCIPALE -->
+		<!--<div id="id_sticky_aside" class="grid-x ma-grille-principal">-->
 		
 		
-		<!-- Contenu droite - Rubrique - La clinique - Services - télphone -->
-		
-			<div id="id_sticky_content" class="cell large-9">
-		
-				
-					<div class="grid-x ma_cellule_bleu">
+		<!-- GRILLE CONTENUE -->
+			<!--<div id="id_sticky_content" class="cell large-9">-->
+			
+		<!-- Contenu droite - La Clinique -->	
+					<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first" style="padding:50px 0;">
 						<div class="cell text-center">
 							<header>
 								<h1>La clinique</h1>
@@ -230,7 +115,9 @@ HERE;
 						</div>			
 					</div>
 					
-					<div class="grid-x ma_cellule_gris">
+					
+		<!-- Contenu droite - Services -->			
+					<div class="grid-x ma_cellule_gris" id="second" data-magellan-target="second" style="padding:50px 0;">
 						<div class="cell text-center">
 							<header>
 								<h1>Services</h1>
@@ -377,28 +264,173 @@ HERE;
 									</ul>
 								</li>
 							</ul>
-						</div>	
-	
-						
+						</div>				
 				</div> <!-- end Employers -->
 				
+		<!-- Contenu droite - Spécialisée -->		
+				<div class="grid-x  align-center" id="five" data-magellan-target="five" style="padding:50px 0;" >
+					<div class="cell large-12 text-center">
+						<header>
+							<h1>Spécialités</h1>
+						</header>
+					</div>
+					<div  id="foo" class="cell large-12 masonry-css">
+		';				
+						echo <<<HERE
+							$specialites
+HERE;
+		echo '
+					</div>
+				</div> <!-- END Contenu Spécialisée -->	
 				
+			<!--</div>--> <!-- END Contenu Droite -->
 				
-				
-				
-			</div> <!-- END Contenu Droite -->
-				
-		</div> <!-- END grid-x --> 
+		 
 			
-	</div> <!-- END grid-container -->		
 ';
 		return;	
 	} //showDocAccueil($_data)  
   
 
-  
+	public function showDoc($_data)
+	{
+		echo '
+			<div class="grid-x">
+				<div class="cell text-center ma_cellule_bleu">
+					<h1 class="h2">' . $_data['TITRE'] . '</h1>
+				</div>
+				<div class="cell">
+					<p class="card-section">' . $_data['DOCUMENTS'] . '</p>' . $_data['ID_DOC'].' 
+				</div>
+			</div>			
+		';	
+	} // showDoc($_data)
+	
+	
+	public function showDocuments($_data)
+	{ 	
+		echo '<div class="grid-x">';
+		$doc_content='';
+		foreach ($_data as $val)
+		{			
+			$doc_content .= '
+							<div class="cell large-12 ma_cellule_gris">
+								<h2 class="h3">
+									<a href="../Php/index.php?EX=doc&amp;ID_DOC='.$val['ID_DOC'].'&amp;ID_FICHE='. $val['ID_FICHE'].'"> ' . $val['TITRE'] . '</a>
+								</h2> 
+							</div>
+							<div class="cell large-12">
+								<p class="card-section">' . $val['DOCUMENTS'] . '</p>' 
+								. $val['ID_DOC'] .'-'. $val['ID_FICHE'].'
+							</div>
+							<div class="cell large-12 text-center">
+								<a class="button large" href="../Php/index.php?EX=doc&amp;ID_DOC='.$val['ID_DOC'].'&amp;ID_FICHE='. $val['ID_FICHE'].'">Lire la suite?</a>		
+							</div>				
+							';
+		}
+		
+		echo <<<HERE
+		<div class="cell text-center ma_cellule_bleu">
+		<h1 class="h2">{$_SESSION['FICHE_TITRE']}</h1>
+		</div>
+		$doc_content
+HERE;
+		echo '</div>';
+   
+	} // showDocuments($_data)
   
 
+	public function formDocument($_data)
+  {
+	$data_fiches = isset($_data['FICHES']) ? $_data['FICHES'] : '';  
+	
+	$data_doc = isset($_data['DOCUMENTS']) ? $_data['DOCUMENTS'] : '';
+	
+	$mfiches = new MFiches();
+  	$fiches = $mfiches->SelectAllFiches();
+	
+	$selected = '';
+  	$options = '';
+  	foreach ($fiches as $val1)
+  	{
+		if ($data_fiches)
+		{
+			foreach ($data_fiches as $val2)
+			{
+				$selected = (isset($val2['ID_FICHE']) && $val1['ID_FICHE'] == $val2['ID_FICHE']) ? 'selected="selected"' : '';
+			
+				if ($selected) break;
+			}
+		}
+
+		$options .= '<option '.$selected.' value="'.$val1['ID_FICHE'].'">'.$val1['FICHE_TITRE'].'</option>';
+	
+	}  
+	  
+	echo <<<HERE
+		<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first">
+			<div class="cell text-center">
+				<header>
+					<h1>Formulaire nouveau Documents</h1>
+				</header>	
+			</div>								
+		</div>
+		<form data-abide novalidate action="../Php/index.php?EX=insert_document" method="post">
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Vous avez oubliez un ou plusieurs champs.</p>
+			</div>
+			<div class="grid-x ma_cellule_gris" style="">
+				<div class="cell large-8 large-offset-2">
+					<div class="grid-x">
+						<div class="small-2 cell">
+							<label for="titre" class="text-left middle">Titre</label>
+						</div>
+						<div class="small-10 cell">			
+							<input class="" id="titre" name="TITRE" value="" type="text" placeholder="Titre" 
+							aria-describedby="exampleTitre" aria-errormessage="exampleErrorTitre" required pattern="text">
+							<span class="form-error" id="exampleErrorTitre">
+								Required!
+							</span>	
+							<p class="help-text" id="exampleTitre">Entrer le titre.</p>		
+						</div>
+
+						<div class="small-2 cell">
+							<label for="doc" class="text-left middle">Documents</label>
+						</div>
+						<div class="small-10 cell">			
+							<input class="" id="doc" name="DOCUMENTS" value="" type="text" placeholder="Documents" 
+							aria-describedby="exampleDoc" aria-errormessage="exampleErrorDoc" required pattern="text">
+							<span class="form-error" id="exampleErrorDoc">
+								Required!
+							</span>	
+							<p class="help-text" id="exampleDoc">Entrer le Documents.</p>		
+						</div>		
+					
+						<div class="small-2 cell">
+							<label for="fiche" class="text-left middle">Fiches</label>
+						</div>
+						<div class="small-10 cell">
+							<select id="fiche" name="ID_FICHE[]" multiple="multiple" required>
+								$options
+							</select>
+						</div>
+					</div>
+				</div>
+								
+				<div class="cell large-12" style="">
+					<div class="grid-x">
+						<div class="cell large-3 large-offset-2" style="">
+							<button class="button large" type="submit" value="Submit">Ok</button>
+						</div>
+					</div>		
+				</div>
+			</div>
+		</form>
+HERE;
+	
+	return;	
+
+  } // formDocument($_data)
   
   
   

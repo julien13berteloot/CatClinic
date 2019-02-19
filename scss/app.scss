@@ -63,11 +63,6 @@
 @include motion-ui-transitions;
 @include motion-ui-animations;
 
-
-
-$monOrange: orange;
-$monBlanc: #FFFFFF;
-
 .align-center{
 	text-align: center;
 	justify-content: center
@@ -84,6 +79,8 @@ $monBlanc: #FFFFFF;
 $bordure-Orange: 3px solid $monOrange;
 $bordure-Gris: 3px solid $monGris;
 $bordure-Bleu: 0.1em solid $monbleu;
+$bordure-Bleu-epaisse: 5px solid $monbleu;
+$bordure-Blanc-epaisse: 5px solid $white;
 $bordure-Blanc: 0.125rem solid $white;
 
 /*----------------------------------------------------------------------
@@ -138,14 +135,17 @@ $bordure-Blanc: 0.125rem solid $white;
 /*----------------------------------------------------------------------
 						CELLULE
 ------------------------------------------------------------------------*/
+.ma-grille-principal
+{
+	border-right:3px solid $monbleu; 
+	border-left:3px solid $monbleu;
+}
 .ma_cellule_bleu
 {
-	//margin-bottom:3px;
 	background-color:$monbleu;
-	padding-top: 50px; 
-	padding-bottom:80px;
+	//padding-top: 50px; 
+	//padding-bottom:80px;
 	border-top: $bordure-Orange;  
-	//border-bottom: $bordure-Orange;
 }
 .ma_cellule_gris
 {
@@ -163,6 +163,13 @@ $bordure-Blanc: 0.125rem solid $white;
 {
 	border:$bordure-Bleu;
 	margin-bottom:10px;
+	background-color:$white;
+}
+.bordure-bleu-picto
+{
+	border:$bordure-Bleu-epaisse;
+	margin-bottom:10px;
+	background-color:$white;
 }
 /*----------------------------------------------------------------------
 						ASIDE
@@ -200,7 +207,7 @@ aside
 		border-radius:50%;
 		margin: 0 auto;
 		padding-top: 20px;
-		margin-top: -5rem;
+		margin-top: -6rem;
 		z-index: 2;
 		
 		.card-title
@@ -209,14 +216,34 @@ aside
 			font-size: 1.5rem;
 			color: $black;
 			margin-top: 30px;
-			padding: 0 10px;
+			padding: 0 30px;
 			font-size: 24px;
+			//background-color: red;
+			height:70px;
+			max-height:70px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		
 		.card-texte
 		{
+			height:77px;
+			padding: 0 20px;
 			font-size: 1rem;
 			margin: 20px 0;
+			//background-color: red;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		
+		h3
+		{
+			height:60px;
+			max-height:60px;
+			color:$monbleu;
+			//background-color:pink;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 	
@@ -236,7 +263,89 @@ aside
 	}
 	
 }
+/*----------------------------------------------------------------------
+						ICONS
+------------------------------------------------------------------------*/
+.picto
+{
+	width:130px; 
+	height:130px; 
+	border-radius:50%; 
+	padding:10px 0;
+}
+i.taille-icons
+{
+	color:$monbleu;
+	font-size:90px; 
+}
+.menu-picto a 
+{
+	&:hover
+	{
+		background-color:$monGris;		
+		transition: all 0.5s ease;
+	}
+	
+	&:hover .bordure-bleu-picto
+	{
+		border:$bordure-Blanc-epaisse;
+		background-color:$monbleu;
+		transition: all 0.5s ease;
+	}
+	&:hover i.taille-icons
+	{
+		color:$white;
+		transition: all 0.5s ease;
+	}
+}
+.mon-lien
+{
+	font-weight: bold;
+	min-height:80px;
+}
+/*----------------------------------------------------------------------
+						MASONRY
+------------------------------------------------------------------------*/
+$masonry-css-column-gap: $global-margin;
 
+.masonry-css 
+{
 
+	//width:100%;
+	column-count: 1;
+	column-gap: $masonry-css-column-gap;
+  
+	.callout 
+	{
+		background-color:$monGris;
+		padding:30px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 
+	@include breakpoint(400px) 
+	{
+		column-count: 2;
+	}
 
+	@include breakpoint(600px) 
+	{
+		column-count: 3;
+	}
+
+	@include breakpoint(800px) 
+	{
+		column-count: 4;
+	}
+
+	@include breakpoint(1100px) 
+	{
+		column-count: 4;
+	}
+}
+
+.masonry-css-item 
+{
+	break-inside: avoid;
+	margin-bottom: $masonry-css-column-gap;
+}

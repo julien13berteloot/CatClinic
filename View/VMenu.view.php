@@ -25,6 +25,21 @@ class VMenu
    */
   public function showMenu()
   {
+	global $ID_USER;
+	$li = '';
+	if ($ID_USER)
+	{
+		$li .= '<li><a href="../Php/index.php?EX=home">Home</a></li>';
+		$li .= '<li><a href="#">Contact</a></li>';
+		$li .= '<li><a href="../Php/index.php?EX=deconnect">Deconnexion</a></li>';
+	}
+	else
+	{
+		$li .= '<li><a href="../Php/index.php?EX=home">Home</a></li>';
+		$li .= '<li><a href="#">Contact</a></li>';
+		$li .= '<li><a href="../Php/index.php?EX=admin">Connexion</a></li>';
+	}
+	  
 	echo'
 	<div class="grid-container">
 	
@@ -40,20 +55,20 @@ class VMenu
 				</div>
 				<div class="top-bar" id="example-menu" >
 					<div class="top-bar-left anim-menu" data-anim-menu>
-						<ul class="vertical medium-horizontal menu align-center" data-responsive-menu="accordion ">
-							<li>
-								<a href="#">Home</a>
-							</li>
-							<li>
-								<a href="#">Item 2</a>
-							</li>
-							<li>
-								<a href="#">Item 3</a>						
-							</li>
-							<li>
-								<a href="#">Item 4</a>						
-							</li>		
-						</ul>
+						
+						
+	';	
+
+	echo <<<HERE
+	<ul class="vertical medium-horizontal menu align-center" data-responsive-menu="accordion ">
+		<!--<h1 id="logo" title="Logo"><a href="../Php/index.php?EX=home&amp;ID_USER=$ID_USER">Logo</a></h1>-->
+		$li 
+	</ul>		
+HERE;
+
+	echo '
+							
+						
 					</div>
 				</div>
 			</div>

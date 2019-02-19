@@ -70,6 +70,7 @@ class MFiches
 		return;
   
 	} // SetValue($_value)
+
 	
 	public function SelectAllFiches()
 	{
@@ -85,6 +86,21 @@ class MFiches
    
 	} // SelectAllFiches()
 	
+	
+	public function Insert()
+	{
+		$query = 'insert into FICHES (FICHE_TITRE)
+              values(:FICHE_TITRE)';
+ 
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':FICHE_TITRE', $this->value['FICHE_TITRE'], PDO::PARAM_STR);
+  
+		$result->execute() or die ($this->Error($result));
+  	
+  	return;
+  
+	} // Insert()
 	
 	
   
