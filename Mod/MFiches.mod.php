@@ -87,7 +87,7 @@ class MFiches
 	} // SelectAllFiches()
 	
 	
-	public function Insert()
+	public function InsertFiche()
 	{
 		$query = 'insert into FICHES (FICHE_TITRE)
               values(:FICHE_TITRE)';
@@ -100,7 +100,41 @@ class MFiches
   	
   	return;
   
-	} // Insert()
+	} // InsertFiche()
+	
+	public function Delete()
+	{
+		$query = 'delete from FICHES
+				  where ID_FICHE = :ID_FICHE';
+	  
+		$result = $this->conn->prepare($query);
+	  
+		$result->bindValue(':ID_FICHE', $this->id_fiche, PDO::PARAM_INT);
+	  
+		$result->execute() or die ($this->Error($result));
+		
+		return;
+		 
+	} // Delete()
+	
+	public function Update()
+	{		  
+		$query = 	'update FICHES
+					set FICHE_TITRE = :FICHE_TITRE
+					where ID_FICHE = :ID_FICHE';
+  
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':ID_FICHE', $this->id_fiche, PDO::PARAM_INT);
+		$result->bindValue(':FICHE_TITRE', $this->value['FICHE_TITRE'], PDO::PARAM_STR);
+  
+		$result->execute() or die ($this->Error($result));
+  	
+		return;
+  
+	} // Update()
+	
+	
 	
 	
   

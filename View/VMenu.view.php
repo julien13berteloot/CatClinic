@@ -32,6 +32,7 @@ class VMenu
 		$li .= '<li><a href="../Php/index.php?EX=home">Home</a></li>';
 		$li .= '<li><a href="#">Contact</a></li>';
 		$li .= '<li><a href="../Php/index.php?EX=deconnect">Deconnexion</a></li>';
+		
 	}
 	else
 	{
@@ -39,6 +40,8 @@ class VMenu
 		$li .= '<li><a href="#">Contact</a></li>';
 		$li .= '<li><a href="../Php/index.php?EX=admin">Connexion</a></li>';
 	}
+
+	$nouveau = isset($ID_USER)? '<li><a href="../Php/index.php?EX=form_fiche"><button>Nouvelle fiche</button></a></li>' : '';
 	  
 	echo'
 	<div class="grid-container">
@@ -63,6 +66,7 @@ class VMenu
 	<ul class="vertical medium-horizontal menu align-center" data-responsive-menu="accordion ">
 		<!--<h1 id="logo" title="Logo"><a href="../Php/index.php?EX=home&amp;ID_USER=$ID_USER">Logo</a></h1>-->
 		$li 
+		$nouveau
 	</ul>		
 HERE;
 

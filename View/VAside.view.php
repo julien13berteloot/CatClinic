@@ -148,15 +148,21 @@ HERE;
 	{
 		if ($_data)
 		{
-			//$ex = 'update_theme&ID_THEME='.$_data['ID_THEME'];
-			//$theme = $_data['THEME'];
-			//$delete = '<p class="delete"><a href="../Php/index.php?EX=delete_theme&amp;ID_THEME='.$_data['ID_THEME'].'"><button>Supprimer</button></a></p>';
+			$ex = 'update_fiche&ID_FICHE='.$_data['ID_FICHE'];
+			$fiche = $_data['FICHE_TITRE'];
+			$delete = '
+			<div class="grid-x ma_cellule_gris align-center">
+				<a href="../Php/index.php?EX=delete_fiche&amp;ID_FICHE='.$_data['ID_FICHE'].'">
+				<button class="button large">Supprimer</button>
+				</a>
+			</div>
+					 ';
 		}
 		else
 		{
-			//$ex = 'insert_fiche';
+			$ex = 'insert_fiche';
 			$fiche = '';
-			//$delete = '';
+			$delete = '';
 		}
 	
 		echo <<<HERE
@@ -167,7 +173,7 @@ HERE;
 				</header>	
 			</div>								
 		</div>
-		<form data-abide novalidate action="../Php/index.php?EX=insert_fiche" method="post">
+		<form data-abide novalidate action="../Php/index.php?EX=$ex" method="post">
 			<div data-abide-error class="alert callout" style="display: none;">
 				<p><i class="fi-alert"></i>Vous avez oubliez un ou plusieurs champs.</p>
 			</div>
@@ -178,7 +184,7 @@ HERE;
 							<label for="fiche" class="text-left middle">Fiche</label>
 						</div>
 						<div class="small-10 cell">			
-							<input class="" id="fiche" name="FICHE_TITRE" value="" type="text" placeholder="fiche" 
+							<input class="" id="fiche" name="FICHE_TITRE" value="$fiche" type="text" placeholder="fiche" 
 							aria-describedby="examplefiche" aria-errormessage="exampleErrorfiche" required pattern="text">
 							<span class="form-error" id="exampleErrorfiche">
 								Required!
@@ -197,6 +203,9 @@ HERE;
 				</div>
 			</div>
 		</form>
+		
+			$delete
+		</div>
 HERE;
 
 	} // formFiche($_data)

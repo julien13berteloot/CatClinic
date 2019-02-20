@@ -89,13 +89,34 @@ class VDocuments
 		
 		
 		// Aside	
-		echo '
+		echo '		
 		<!-- GRILLE PRINCIPALE -->
 		<!--<div id="id_sticky_aside" class="grid-x ma-grille-principal">-->
 		
 		
 		<!-- GRILLE CONTENUE -->
 			<!--<div id="id_sticky_content" class="cell large-9">-->
+
+		';
+		
+if (isset($ID_USER))
+{
+	echo'admin';
+	
+	
+	
+	
+	
+	
+	
+	
+}
+else
+{
+			
+		
+		
+		echo '
 			
 		<!-- Contenu droite - La Clinique -->	
 					<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first" style="padding:50px 0;">
@@ -162,8 +183,7 @@ class VDocuments
 						<h3>Notre Téléphone : 06 13 13 13 13</h3>
 					</div>						
 				</div>
-				
-		
+			
 		<!-- Contenu droite - FICHES -->
 			
 				<div class="grid-x grid-margin-x" id="third" data-magellan-target="third" style="padding:50px 0;">
@@ -283,11 +303,10 @@ HERE;
 					</div>
 				</div> <!-- END Contenu Spécialisée -->	
 				
-			<!--</div>--> <!-- END Contenu Droite -->
-				
-		 
+			<!--</div>--> <!-- END Contenu Droite -->		 
 			
 ';
+}
 		return;	
 	} //showDocAccueil($_data)  
   
@@ -311,6 +330,7 @@ HERE;
 	{ 	
 		echo '<div class="grid-x">';
 		$doc_content='';
+		
 		foreach ($_data as $val)
 		{			
 			$doc_content .= '
@@ -336,12 +356,13 @@ HERE;
 		$doc_content
 HERE;
 		echo '</div>';
-   
+  
 	} // showDocuments($_data)
   
 
 	public function formDocument($_data)
   {
+/*	  
 	$data_fiches = isset($_data['FICHES']) ? $_data['FICHES'] : '';  
 	
 	$data_doc = isset($_data['DOCUMENTS']) ? $_data['DOCUMENTS'] : '';
@@ -429,7 +450,7 @@ HERE;
 HERE;
 	
 	return;	
-
+*/
   } // formDocument($_data)
   
   

@@ -10,6 +10,9 @@
 // en particulier l'Autoload
 require('../Inc/require.inc.php');
 
+// Récupération de l'identifiant de l'utilisateur
+$ID_USER = isset($_REQUEST['ID_USER']) ?  $_REQUEST['ID_USER'] : '';
+
 // Crée une session nommée
 session_name('EXAMEN');
 session_start();
@@ -20,11 +23,20 @@ $EX = isset($_REQUEST['EX']) ? $_REQUEST['EX'] : 'home';
 // Contrôleur
 switch($EX)
 {
-  case 'home'         	: home();         	break;
-  //case 'document'     	: document();     	break;
- // case 'doc'     		: doc();     		break;
- // case 'admin' 			: admin(); 			break;
-  //case 'deconnect'    	: deconnect();    	break;
+	case 'home'         	: home();         		break;
+	case 'document'     	: document();     		break;
+	case 'doc'     			: doc();     			break;
+	case 'connect' 			: connect(); 			break;
+	case 'admin' 			: admin(); 				break; 
+	case 'deconnect'    	: deconnect();    		break;
+	case 'form_fiche'    	: form_fiche();    		break;	
+	case 'insert_fiche'    	: insert_fiche();   	break;
+	case 'delete_fiche'    	: delete_fiche();   	break;
+	
+	case 'update_fiche'    	: update_fiche();   	break;
+
+	//case 'form_document'    : form_document();  	break;
+	//case 'insert_document'  : insert_document();   break;
  // case 'fiche'    		: fiche();    		break;
  // case 'page' 			: page();			exit;
 }
@@ -39,25 +51,10 @@ require('../View/layout.view.php');
  */
 function home()
 {
-	//debug($_SESSION);
-/*	
+	debug($_SESSION);
+	
 	$_SESSION['HOME'] = true;
-	
-	$mfiches = new MFiches();
-	$data['FICHES_TITRES'] = $mfiches->SelectAll();
-	$data['TEST'] = $mfiches->Test();
-	
-	$mdocuments = new MDocuments();
-	$data['DOCUMENTS_TITRE'] = $mdocuments->SelectAllSimple();
-	$data['DOCUMENTS'] = $mdocuments->SelectAllDocument();
-	$data['DOCUMENTS_FICHE'] = $mdocuments->SelectAllFicheDocument();
-	
-	$mspecialites = new MSpecialites();
-	$data['SPECIALITES'] = $mspecialites->SelectAll();
-	
-	$memployers = new MEmployers();
-	$data['EMPLOYER'] = $memployers->SelectionAllEmployerMetier();
-*/
+
 	// Les Fiches
 	$mfiches = new MFiches();
 	$data['FICHES_TITRES'] = $mfiches->SelectAllFiches();
@@ -67,9 +64,12 @@ function home()
 	$data['DOCUMENTS_FICHE'] = $mdocuments->SelectAllFicheDocument();
 	// Les Employers
 	$memployers = new MEmployers();
-	//$data['EMPLOYER'] = $memployers->SelectionAllEmployerMetier();
+	$data['EMPLOYER'] = $memployers->SelectionAllEmployerMetier();
 	$data['EMPLOYER_DOCTEUR'] = $memployers->SelectionEmployerDocteur();
 	$data['EMPLOYER_AVS'] = $memployers->SelectionEmployerAvs();
+	// Les Specialites
+	$mspecialites = new MSpecialites();
+	$data['SPECIALITES'] = $mspecialites->SelectAllSpecialites();
 	
 	//debug($data);
 	//exit;
@@ -86,6 +86,25 @@ function home()
 } // home()
 
 /**
+ * Vérification de la connexion
+ *
+ * @return none
+ */
+function connect()
+{
+	$musers = new MUsers();
+	$value = $musers->VerifUser($_POST);
+  
+	global $ID_USER;
+	$ID_USER = $value['ID_USER'];
+  
+	home();
+  
+	return;
+
+} // connect()
+
+/**
  * Affichage de la page d'accueil 
  * en mode administration
  *
@@ -93,15 +112,20 @@ function home()
  */
 function admin()
 {
-/*	
+
+	debug($_SESSION);
+
 	unset($_SESSION['HOME']);
   
 	$_SESSION['ADMIN'] = true;
 
-	home();
-
+	global $content;
+	$content['title'] = 'Connexion';
+	$content['class'] = 'VHtml';
+	$content['method'] = 'showHtml';
+	$content['arg'] = '../Html/form_connect.html';
+  
 	return;
-*/
 } // admin()
 
 /**
@@ -111,13 +135,13 @@ function admin()
  */
 function deconnect()
 {
-/*	
+	//debug($_SESSION);
+	
 	session_unset();
 
-	home();
+	header('Location: ../Php');
 
 	return;
-*/
 } // deconnect()
 
 /**
@@ -128,12 +152,11 @@ function deconnect()
  */
 function document($id_fiche = null)
 {
-/*	
-	debug($_GET);
+	/*debug($_GET);
 	debug($_POST);
 	echo 'gg';
-	//debug($_SESSION['ID_FICHE']);
-	//debug($_SESSION['FICHE_TITRE']);
+	debug($_SESSION['ID_FICHE']);
+	debug($_SESSION['FICHE_TITRE']);*/
 	
 	$_SESSION['ID_FICHE'] = isset($_GET['ID_FICHE']) ? $_GET['ID_FICHE'] : $id_fiche;
 	$_SESSION['FICHE_TITRE'] = isset($_GET['FICHE_TITRE']) ? $_GET['FICHE_TITRE'] : $_SESSION['FICHE_TITRE'];
@@ -155,21 +178,21 @@ function document($id_fiche = null)
 	$content['arg'] = $data;
 
 	return;
-*/	
+	
 } // document()
 
 function doc()
 {
-/*	
-	debug($_GET);
-	debug($_POST);
-	echo 'gg';
+	
+	//debug($_GET);
+	//debug($_POST);
+	//echo 'gg';
 	//debug($_SESSION['ID_FICHE']);
 	//debug($_SESSION['FICHE_TITRE']);
 	
 
 	$mdocuments = new MDocuments($_GET['ID_DOC']);
-	$data = $mdocuments->Select();
+	$data = $mdocuments->SelectDocument();
 	
 	//debug($data);
 	//exit;
@@ -182,8 +205,192 @@ function doc()
 	$content['arg'] = $data;
 
 	return;
+	
+}
+
+function form_fiche()
+{
+/*
+$data = isset($_GET['ID_FICHE']) ? $_GET : '';
+	
+  global $content;
+
+  $content['title'] = 'Nouvelle Fiche';
+  $content['class'] = 'VMenu';
+  $content['method'] = 'formFiche';
+  $content['arg'] = $data;
+
+  return;
+*/
+
+	$data = isset($_GET['ID_FICHE']) ? $_GET : '';
+	
+	global $content;
+
+	$content['title'] = 'Nouvelle fiche';
+	$content['class'] = 'VAside';
+	$content['method'] = 'formFiche';
+	$content['arg'] = $data;
+
+	return;
+	
+} // form_fiche()
+
+function insert_fiche()
+{
+/*
+$mcontacts = new MFiches();
+  $mcontacts->SetValue($_POST);
+  $mcontacts->InsertFiche();
+
+  home();
+
+  return;
+*/
+	$mfiches = new MFiches();
+	$mfiches->SetValue($_POST);
+	$mfiches->InsertFiche();
+	
+	home();
+
+	return;
+
+} // insert_fiche()
+
+function delete_fiche()
+{
+	$mfiches = new MFiches($_GET['ID_FICHE']);
+	$mfiches->Delete();
+
+	home();
+
+	return;
+
+} // delete_fiche()
+
+function update_fiche()
+{
+	$mfiches = new MFiches($_GET['ID_FICHE']);
+	$mfiches->SetValue($_POST);
+	$mfiches->Update();
+
+	home();
+
+	return;
+} // update_fiche
+
+
+
+
+
+
+
+
+
+function form_document()
+{
+	/*
+	if (isset($_GET['ID_DOC']))
+  {
+    $mdocuments = new MDocuments($_GET['ID_DOC']);
+    $data['DOCUMENTS'] = $mdocuments->Select();
+    
+    $data['THEMES'] = $mdocuments->SelectThemesDocuments();
+  }
+  else
+  {
+  	$data['THEMES'][0]['ID_THEME'] = $_SESSION['ID_THEME'];
+  }
+  
+  global $content;
+	
+  $content['title'] = 'Nouveau document';
+  $content['class'] = 'VDocuments';
+  $content['method'] = 'formDocument';
+  $content['arg'] = $data;
+  
+  return;
+  */
+/*
+	$mdocuments = new MDocuments($_GET['ID_DOC']);
+	$data['DOCUMENTS'] = $mdocuments->SelectDocument();
+	
+	$data['FICHES'] = $mdocuments->SelectFichesDocuments();
+	
+	global $content;
+	
+	$content['title'] = 'Nouveau document';
+	$content['class'] = 'VDocuments';
+	$content['method'] = 'formDocument';
+	$content['arg'] = $data;
+	
+	return;
 */	
 }
+
+function insert_document()
+{
+	/*
+	if ($_FILES['FICHIER']['name'])
+  {
+  	$file_new = upload($_FILES['FICHIER']);
+  	
+  	move_file($file_new);
+   	
+   	$value['FICHIER'] = $file_new;
+  }
+  else
+  {
+  	$value['FICHIER'] = '';
+  }
+  
+  $value['TITRE'] = $_POST['TITRE'];
+  $value['AUTEUR'] = $_POST['AUTEUR'];
+  	 
+  $mdocuments = new MDocuments();
+  $mdocuments->SetValue($value);
+  $id_doc = $mdocuments->Insert();
+  
+  $val['ID_DOC'] = $id_doc;
+  
+  foreach ($_POST['ID_THEME'] as $v)
+  {
+  	$val['ID_THEME'] = $v;  	 
+    
+    $mdocuments->SetValue($val);
+    $mdocuments->InsertThemesDocuments();
+  }
+  
+  document($_SESSION['ID_THEME']);
+
+  return;
+	*/
+/*	
+	$value['TITRE'] = $_POST['TITRE'];
+	$value['DOCUMENTS'] = $_POST['DOCUMENTS'];
+	
+	$mdocuments = new MDocuments();
+	$mdocuments->SetValue($value);
+	$id_doc = $mdocuments->InsertDocument();
+	
+	$val['ID_DOC'] = $id_doc;
+	
+	foreach ($_POST['ID_FICHE'] as $v)
+	{
+		$val['ID_FICHE'] = $v;  	 
+    
+		$mdocuments->SetValue($val);
+		$mdocuments->InsertFichesDocuments();
+	}
+	
+	document($_SESSION['ID_FICHE']);
+	
+	return;
+*/	
+}
+
+
+
 
 function fiche($id_fiche = null)
 {
