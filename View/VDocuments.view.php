@@ -97,26 +97,6 @@ class VDocuments
 		<!-- GRILLE CONTENUE -->
 			<!--<div id="id_sticky_content" class="cell large-9">-->
 
-		';
-		
-if (isset($ID_USER))
-{
-	echo'admin';
-	
-	
-	
-	
-	
-	
-	
-	
-}
-else
-{
-			
-		
-		
-		echo '
 			
 		<!-- Contenu droite - La Clinique -->	
 					<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first" style="padding:50px 0;">
@@ -306,7 +286,7 @@ HERE;
 			<!--</div>--> <!-- END Contenu Droite -->		 
 			
 ';
-}
+
 		return;	
 	} //showDocAccueil($_data)  
   
@@ -361,97 +341,120 @@ HERE;
   
 
 	public function formDocument($_data)
-  {
-/*	  
-	$data_fiches = isset($_data['FICHES']) ? $_data['FICHES'] : '';  
-	
-	$data_doc = isset($_data['DOCUMENTS']) ? $_data['DOCUMENTS'] : '';
-	
-	$mfiches = new MFiches();
-  	$fiches = $mfiches->SelectAllFiches();
-	
-	$selected = '';
-  	$options = '';
-  	foreach ($fiches as $val1)
-  	{
-		if ($data_fiches)
+	{
+		$data_fiches = isset($_data['FICHES']) ? $_data['FICHES'] : '';
+
+		$data_doc = isset($_data['DOCUMENTS']) ? $_data['DOCUMENTS'] : '';
+		
+		$mfiches = new MFiches();
+		$mfiches = $mfiches->SelectAllFiches();
+		
+		$selected = '';
+		$options = '';
+		foreach ($mfiches as $val1)
 		{
-			foreach ($data_fiches as $val2)
+			if ($data_fiches)
 			{
-				$selected = (isset($val2['ID_FICHE']) && $val1['ID_FICHE'] == $val2['ID_FICHE']) ? 'selected="selected"' : '';
+				foreach ($data_fiches as $val2)
+				{
+					$selected = (isset($val2['ID_FICHE']) && $val1['ID_FICHE'] == $val2['ID_FICHE']) ? 'selected="selected"' : '';
 			
-				if ($selected) break;
+					if ($selected) break;
+				}
 			}
+		  
+			$options .= '<option '.$selected.' value="'.$val1['ID_FICHE'].'">'.$val1['FICHE_TITRE'].'</option>';
+
+			$delete = $data_doc ? '<p><a href="../Php/index.php?EX=delete_document&amp;ID_DOC='.$data_doc['ID_DOC'].'"><button>Supprimer</button></a></p>' : '';	
+  	  	
+		}
+		
+		if ($data_doc)
+		{
+			$titre = $data_doc['TITRE'];
+			$document = $data_doc['DOCUMENTS'];
+			//$fichier = $data_doc['FICHIER'];
+	  
+			//$fichier = ($data_doc['FICHIER']) ? 'Fichier : ' . $data_doc['FICHIER'] : 'Fichier';
+			//$fichier_old = ($data_doc['FICHIER']) ? $data_doc['FICHIER'] : '';
+			$ex = 'update_document&amp;ID_DOC='.$data_doc['ID_DOC'];
+		}
+		else
+		{
+			$titre = '';
+			$document = '';
+			//$fichier = '';
+			// $fichier_old = '';
+			$ex = 'insert_document';
 		}
 
-		$options .= '<option '.$selected.' value="'.$val1['ID_FICHE'].'">'.$val1['FICHE_TITRE'].'</option>';
-	
-	}  
-	  
-	echo <<<HERE
-		<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first">
-			<div class="cell text-center">
-				<header>
-					<h1>Formulaire nouveau Documents</h1>
-				</header>	
-			</div>								
-		</div>
-		<form data-abide novalidate action="../Php/index.php?EX=insert_document" method="post">
-			<div data-abide-error class="alert callout" style="display: none;">
-				<p><i class="fi-alert"></i>Vous avez oubliez un ou plusieurs champs.</p>
+		
+		
+		echo <<<HERE
+			<div class="grid-x ma_cellule_bleu" id="first" data-magellan-target="first">
+				<div class="cell text-center">
+					<header>
+						<h1>Formulaire nouveau Documents</h1>
+					</header>	
+				</div>								
 			</div>
-			<div class="grid-x ma_cellule_gris" style="">
-				<div class="cell large-8 large-offset-2">
-					<div class="grid-x">
-						<div class="small-2 cell">
-							<label for="titre" class="text-left middle">Titre</label>
-						</div>
-						<div class="small-10 cell">			
-							<input class="" id="titre" name="TITRE" value="" type="text" placeholder="Titre" 
-							aria-describedby="exampleTitre" aria-errormessage="exampleErrorTitre" required pattern="text">
-							<span class="form-error" id="exampleErrorTitre">
-								Required!
-							</span>	
-							<p class="help-text" id="exampleTitre">Entrer le titre.</p>		
-						</div>
+			<form data-abide novalidate action="../Php/index.php?EX=$ex" method="post">
+				<div data-abide-error class="alert callout" style="display: none;">
+					<p><i class="fi-alert"></i>Vous avez oubliez un ou plusieurs champs.</p>
+				</div>
+				<div class="grid-x ma_cellule_gris" style="">
+					<div class="cell large-8 large-offset-2">
+						<div class="grid-x">
+							<div class="small-2 cell">
+								<label for="titre" class="text-left middle">Titre</label>
+							</div>
+							<div class="small-10 cell">			
+								<input class="" id="titre" name="TITRE" value="$titre" type="text" placeholder="Titre" 
+								aria-describedby="exampleTitre" aria-errormessage="exampleErrorTitre" required pattern="text">
+								<span class="form-error" id="exampleErrorTitre">
+									Required!
+								</span>	
+								<p class="help-text" id="exampleTitre">Entrer le titre.</p>		
+							</div>
 
-						<div class="small-2 cell">
-							<label for="doc" class="text-left middle">Documents</label>
-						</div>
-						<div class="small-10 cell">			
-							<input class="" id="doc" name="DOCUMENTS" value="" type="text" placeholder="Documents" 
-							aria-describedby="exampleDoc" aria-errormessage="exampleErrorDoc" required pattern="text">
-							<span class="form-error" id="exampleErrorDoc">
-								Required!
-							</span>	
-							<p class="help-text" id="exampleDoc">Entrer le Documents.</p>		
-						</div>		
-					
-						<div class="small-2 cell">
-							<label for="fiche" class="text-left middle">Fiches</label>
-						</div>
-						<div class="small-10 cell">
-							<select id="fiche" name="ID_FICHE[]" multiple="multiple" required>
-								$options
-							</select>
+							<div class="small-2 cell">
+								<label for="doc" class="text-left middle">Documents</label>
+							</div>
+							<div class="small-10 cell">			
+								<input class="" id="doc" name="DOCUMENTS" value="$document" type="text" placeholder="Documents" 
+								aria-describedby="exampleDoc" aria-errormessage="exampleErrorDoc" required pattern="text">
+								<span class="form-error" id="exampleErrorDoc">
+									Required!
+								</span>	
+								<p class="help-text" id="exampleDoc">Entrer le Documents.</p>		
+							</div>		
+						
+							<div class="small-2 cell">
+								<label for="fiche" class="text-left middle">Fiches</label>
+							</div>
+							<div class="small-10 cell">
+								<select id="fiche" name="ID_FICHE[]" multiple="multiple" required>
+									$options
+								</select>
+							</div>
 						</div>
 					</div>
+									
+					<div class="cell large-12" style="">
+						<div class="grid-x">
+							<div class="cell large-3 large-offset-2" style="">
+								<button class="button large" type="submit" value="Submit">Ok</button>
+							</div>
+						</div>		
+					</div>
 				</div>
-								
-				<div class="cell large-12" style="">
-					<div class="grid-x">
-						<div class="cell large-3 large-offset-2" style="">
-							<button class="button large" type="submit" value="Submit">Ok</button>
-						</div>
-					</div>		
-				</div>
-			</div>
-		</form>
+			</form>
+			$delete
 HERE;
 	
-	return;	
-*/
-  } // formDocument($_data)
+		return;	
+
+	} // formDocument($_data)
   
   
   

@@ -32,11 +32,13 @@ switch($EX)
 	case 'form_fiche'    	: form_fiche();    		break;	
 	case 'insert_fiche'    	: insert_fiche();   	break;
 	case 'delete_fiche'    	: delete_fiche();   	break;
-	
 	case 'update_fiche'    	: update_fiche();   	break;
-
-	//case 'form_document'    : form_document();  	break;
-	//case 'insert_document'  : insert_document();   break;
+	case 'form_document'    : form_document();  	break;
+	
+	case 'insert_document'  : insert_document();   break;
+	case 'update_document'  : update_document();   break;
+	case 'delete_document'  : delete_document();   break;
+	
  // case 'fiche'    		: fiche();    		break;
  // case 'page' 			: page();			exit;
 }
@@ -51,7 +53,7 @@ require('../View/layout.view.php');
  */
 function home()
 {
-	debug($_SESSION);
+	//debug($_SESSION);
 	
 	$_SESSION['HOME'] = true;
 
@@ -113,7 +115,7 @@ function connect()
 function admin()
 {
 
-	debug($_SESSION);
+	//debug($_SESSION);
 
 	unset($_SESSION['HOME']);
   
@@ -210,19 +212,6 @@ function doc()
 
 function form_fiche()
 {
-/*
-$data = isset($_GET['ID_FICHE']) ? $_GET : '';
-	
-  global $content;
-
-  $content['title'] = 'Nouvelle Fiche';
-  $content['class'] = 'VMenu';
-  $content['method'] = 'formFiche';
-  $content['arg'] = $data;
-
-  return;
-*/
-
 	$data = isset($_GET['ID_FICHE']) ? $_GET : '';
 	
 	global $content;
@@ -238,15 +227,6 @@ $data = isset($_GET['ID_FICHE']) ? $_GET : '';
 
 function insert_fiche()
 {
-/*
-$mcontacts = new MFiches();
-  $mcontacts->SetValue($_POST);
-  $mcontacts->InsertFiche();
-
-  home();
-
-  return;
-*/
 	$mfiches = new MFiches();
 	$mfiches->SetValue($_POST);
 	$mfiches->InsertFiche();
@@ -279,44 +259,20 @@ function update_fiche()
 	return;
 } // update_fiche
 
-
-
-
-
-
-
-
-
 function form_document()
 {
-	/*
 	if (isset($_GET['ID_DOC']))
-  {
-    $mdocuments = new MDocuments($_GET['ID_DOC']);
-    $data['DOCUMENTS'] = $mdocuments->Select();
-    
-    $data['THEMES'] = $mdocuments->SelectThemesDocuments();
-  }
-  else
-  {
-  	$data['THEMES'][0]['ID_THEME'] = $_SESSION['ID_THEME'];
-  }
-  
-  global $content;
+	{
+		$mdocuments = new MDocuments($_GET['ID_DOC']);
+		$data['DOCUMENTS'] = $mdocuments->SelectDocument();
 	
-  $content['title'] = 'Nouveau document';
-  $content['class'] = 'VDocuments';
-  $content['method'] = 'formDocument';
-  $content['arg'] = $data;
-  
-  return;
-  */
-/*
-	$mdocuments = new MDocuments($_GET['ID_DOC']);
-	$data['DOCUMENTS'] = $mdocuments->SelectDocument();
-	
-	$data['FICHES'] = $mdocuments->SelectFichesDocuments();
-	
+		$data['FICHES'] = $mdocuments->SelectFichesDocuments();
+	}
+	else
+	{
+		$data['FICHES'][0]['ID_FICHE'] = $_SESSION['ID_FICHE'];
+	}
+
 	global $content;
 	
 	$content['title'] = 'Nouveau document';
@@ -325,106 +281,77 @@ function form_document()
 	$content['arg'] = $data;
 	
 	return;
-*/	
+	
 }
 
 function insert_document()
 {
-	/*
-	if ($_FILES['FICHIER']['name'])
-  {
-  	$file_new = upload($_FILES['FICHIER']);
-  	
-  	move_file($file_new);
-   	
-   	$value['FICHIER'] = $file_new;
-  }
-  else
-  {
-  	$value['FICHIER'] = '';
-  }
-  
-  $value['TITRE'] = $_POST['TITRE'];
-  $value['AUTEUR'] = $_POST['AUTEUR'];
-  	 
-  $mdocuments = new MDocuments();
-  $mdocuments->SetValue($value);
-  $id_doc = $mdocuments->Insert();
-  
-  $val['ID_DOC'] = $id_doc;
-  
-  foreach ($_POST['ID_THEME'] as $v)
-  {
-  	$val['ID_THEME'] = $v;  	 
-    
-    $mdocuments->SetValue($val);
-    $mdocuments->InsertThemesDocuments();
-  }
-  
-  document($_SESSION['ID_THEME']);
-
-  return;
-	*/
-/*	
-	$value['TITRE'] = $_POST['TITRE'];
+	//$value['AUTEUR'] = $_POST['AUTEUR'];
 	$value['DOCUMENTS'] = $_POST['DOCUMENTS'];
-	
+	$value['TITRE'] = $_POST['TITRE'];
+  	 
 	$mdocuments = new MDocuments();
 	$mdocuments->SetValue($value);
 	$id_doc = $mdocuments->InsertDocument();
-	
+  
 	$val['ID_DOC'] = $id_doc;
-	
-	foreach ($_POST['ID_FICHE'] as $v)
+  
+	foreach ($_POST['ID_FICHE'] as $fiche)
 	{
-		$val['ID_FICHE'] = $v;  	 
+		$val['ID_FICHE'] = $fiche;  	 
     
 		$mdocuments->SetValue($val);
 		$mdocuments->InsertFichesDocuments();
 	}
-	
+  
 	document($_SESSION['ID_FICHE']);
-	
+
 	return;
-*/	
 }
 
-
-
-
-function fiche($id_fiche = null)
+function update_document()
 {
-/*	
-	debug($_GET);
-	debug($_POST);
-	echo 'gg';
-	//debug($_SESSION['ID_FICHE']);
-	//debug($_SESSION['FICHE_TITRE']);
-	
-	//$_SESSION['ID_FICHE'] = isset($_GET['ID_FICHE']) ? $_GET['ID_FICHE'] : $id_fiche;
-	//$_SESSION['FICHE_TITRE'] = isset($_GET['FICHE_TITRE']) ? $_GET['FICHE_TITRE'] : $_SESSION['FICHE_TITRE'];
-	
-	//$value['ID_FICHE'] = $_SESSION['ID_FICHE'];
-
-	$mfiches = new MFiches();
-	$data['FICHES'] = $mfiches->selectAll();
-
-	$mdocuments = new MDocuments();
-	$data['DOC'] = $mdocuments->Tout();
-
-	//debug($data);
-	//exit;
-	
-	global $content;
-
-	$content['title'] = 'fiches conseil';
-	$content['class'] = 'VDocuments';
-	$content['method'] = 'showFiche';
-	$content['arg'] = $data;
-
+	$value['TITRE'] = $_POST['TITRE'];
+	//$value['AUTEUR'] = $_POST['AUTEUR'];
+	$value['DOCUMENTS'] = $_POST['DOCUMENTS'];
+  
+	$mdocuments = new MDocuments($_GET['ID_DOC']);
+	$mdocuments->SetValue($value);
+	$mdocuments->Update();
+	$mdocuments->DeleteFichesDocuments();
+  
+	foreach ($_POST['ID_FICHE'] as $v)
+	{
+		$val['ID_FICHE'] = $v;
+  
+		$mdocuments->SetValue($val);
+		$mdocuments->InsertThemesDocuments();
+	}
+  
+	document($_SESSION['ID_FICHE']);
+  
 	return;
-*/	
 }
+
+function delete_document()
+{
+	$mdocuments = new MDocuments($_GET['ID_DOC']);
+	$mdocuments->Delete();
+	$mdocuments->DeleteFichesDocuments();
+  
+	document($_SESSION['ID_FICHE']);
+  
+	return;
+
+} // delete()
+
+
+
+
+
+
+
+
 
 /**
  *  Affichage des pages
