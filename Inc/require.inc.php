@@ -9,7 +9,7 @@
 
 // Constantes pour la Base de données
 define('DEBUG', true);
-define('DATABASE', 'mysql:host=localhost;dbname=nfa021');
+define('DATABASE', 'mysql:host=localhost;dbname=julien');
 define('LOGIN', 'root');
 define('PASSWORD', '');
 

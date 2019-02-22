@@ -70,8 +70,106 @@ class MFiches
 		return;
   
 	} // SetValue($_value)
-
 	
+	public function SelectAllFiches()
+	{
+		$query = 'select ID_FICHE, FICHE_TITRE
+				  from FICHES
+				  order by FICHE_TITRE';
+
+			$result = $this->conn->prepare($query);
+
+			$result->execute() or die ($this->Error($result));
+	  
+			return $result->fetchAll();
+	   
+	} // SelectAllFiches()
+  
+	public function UpdateFiche()
+	{  
+		$query = 'update FICHES
+				  set FICHE_TITRE = :FICHE_TITRE
+				  where ID_FICHE = :ID_FICHE';
+	  
+		$result = $this->conn->prepare($query);
+	  
+		$result->bindValue(':ID_FICHE', $this->id_fiche, PDO::PARAM_INT);
+		$result->bindValue(':FICHE_TITRE', $this->value['FICHE_TITRE'], PDO::PARAM_STR);
+	  
+		$result->execute() or die ($this->Error($result));
+		
+		return;
+  
+	} // UpdateFiche()
+  
+	public function InsertFiche()
+	{
+		$query = 'insert into FICHES (FICHE_TITRE)
+				  values(:FICHE_TITRE)';
+	 
+		$result = $this->conn->prepare($query);
+	  
+		$result->bindValue(':FICHE_TITRE', $this->value['FICHE_TITRE'], PDO::PARAM_STR);
+	  
+		$result->execute() or die ($this->Error($result));
+		
+		return;
+  
+	} // InsertFiche()
+  
+	public function DeleteFiche()
+	{
+		$query = 'delete from FICHES
+				  where ID_FICHE = :ID_FICHE';
+	  
+		$result = $this->conn->prepare($query);
+	  
+		$result->bindValue(':ID_FICHE', $this->id_fiche, PDO::PARAM_INT);
+	  
+		$result->execute() or die ($this->Error($result));
+		
+		return;
+		 
+	} // DeleteFiche()
+  
+	public function Insert()
+	{
+		$query = 'insert into THEMES (THEME)
+				  values(:THEME)';
+	 
+		$result = $this->conn->prepare($query);
+	  
+		$result->bindValue(':THEME', $this->value['THEME'], PDO::PARAM_STR);
+	  
+		$result->execute() or die ($this->Error($result));
+		
+		return;
+	  
+	} // Insert()
+
+	public function Update()
+	{	
+		$query = 'update THEMES
+				  set THEME = :THEME
+				  where ID_THEME = :ID_THEME';
+	  
+		$result = $this->conn->prepare($query);
+	  
+		$result->bindValue(':ID_THEME', $this->id_theme, PDO::PARAM_INT);
+		$result->bindValue(':THEME', $this->value['THEME'], PDO::PARAM_STR);
+	  
+		$result->execute() or die ($this->Error($result));
+		
+		return;
+  
+	} // Update()
+  
+  
+  
+  
+	
+
+/*	
 	public function SelectAllFiches()
 	{
 		$query = 	'select ID_FICHE, FICHE_TITRE
@@ -226,13 +324,7 @@ class MFiches
 	*/
 
   
-	/**
-	* Récupère les erreurs SQL
-	* @access private
-	* @param statement résultat de la préparation
-	*
-	* @return none;
-	*/
+
 	private function ErrorSQL($result)
 	{
 		// Récupère le tableau des erreurs

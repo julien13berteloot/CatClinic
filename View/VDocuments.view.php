@@ -42,7 +42,7 @@ class VDocuments
 						<div class="card-section text-center">
 							<h2 class="card-title"><a href="../Php/index.php?EX=doc&amp;ID_FICHE='.$val['ID_FICHE'].'">'.$val['FICHE_TITRE'].'</a></h2>
 							<h3 class="h5">'.$val['TITRE'].'</h3>
-							<p class="card-texte">'.$val['DOCUMENTS'].'</p>
+							<p class="card-texte">'.$val['DOCUMENT'].'</p>
 						</div>
 					</div>
 					<div class="card-divider flex-container  align-center">
@@ -288,10 +288,115 @@ HERE;
 ';
 
 		return;	
-	} //showDocAccueil($_data)  
+	} //showDocAccueil($_data)   
   
-
-	public function showDoc($_data)
+	public function showMetiers($_data)
+  { 
+    $tr = '';
+    foreach ($_data as $val)
+    {
+      if (!isset($_SESSION['ADMIN']) && (!isset($_SESSION['ID_USER'])))
+      {
+        $tr .= '<tr><td>'.$val['NOM'].'</td><td>'.$val['PRENOM'].'</td></tr>';
+      }
+      else
+      {
+      	$tr .= '<tr><td><a href="../Php/index.php?EX=form_employer&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['NOM'].'</a></td><td>'.$val['PRENOM'].'</td></tr>';
+      }
+    }
+    
+    $nouveau = isset($_SESSION['ADMIN_DOC']) ? '<p class="nouveau"><a href="../Php/index.php?EX=form_employer"><button>NOUVEAU employer</button></a></p>' : '';   
+           
+    echo <<<HERE
+<h2 class="theme">{$_SESSION['METIER']}</h2>
+<table id="table_documents">
+ <thead>
+  <tr>
+   <th>Titre</th><th>Auteur</th>
+  </tr>
+ </thead>
+ <tbody>
+  $tr
+ </tbody>
+</table>
+  		
+$nouveau
+  		
+<div id="admin"><a href="../Php/index.php?EX=admin"></a></div>
+HERE;
+   
+  } // showDocuments($_data)  
+   
+     public function showDocuments($_data)
+  { 
+   	// Boucle sur les tuples racines de la table CONTACTS
+    $tr = '';
+    foreach ($_data as $val)
+    {
+      if (!isset($_SESSION['ADMIN']) && (!isset($_SESSION['ID_USER'])))
+      {
+        // Concaténation avec l'ancre et le titre de la catégorie
+        $tr .= '<tr><td>'.$val['TITRE'].'</td><td>'.$val['DOCUMENT'].'</td></tr>';
+      }
+      else
+      {
+      	// Concaténation avec l'ancre et le titre de la catégorie
+      	$tr .= '<tr><td><a href="../Php/index.php?EX=form_document&amp;ID_DOC='.$val['ID_DOC'].'">'.$val['TITRE'].'</a></td><td>'.$val['DOCUMENT'].'</td></tr>';
+      }
+    }
+    
+    $nouveau = isset($_SESSION['ADMIN_DOC']) ? '<p class="nouveau"><a href="../Php/index.php?EX=form_document"><button>NOUVEAU DOCUMENT</button></a></p>' : '';   
+	
+	echo '<div class="grid-x">';
+		$doc_content='';
+		
+		foreach ($_data as $val)
+		{			
+			$doc_content .= '
+							<div class="cell large-12 ma_cellule_gris">
+								<h2 class="h3">
+									<a href="../Php/index.php?EX=doc&amp;ID_DOC='.$val['ID_DOC'].'"> ' . $val['TITRE'] . '</a>
+								</h2> 
+							</div>
+							<div class="cell large-12">
+								<p class="card-section">' . $val['DOCUMENT'] . '</p>' 
+								. $val['ID_DOC'] .'
+							</div>
+							<div class="cell large-12 text-center">
+								<a class="button large" href="../Php/index.php?EX=doc&amp;ID_DOC='.$val['ID_DOC'].'">Lire la suite?</a>		
+							</div>				
+							';
+		}
+		
+		echo <<<HERE
+		<div class="cell text-center ma_cellule_bleu">
+		<h1 class="h2">{$_SESSION['FICHE_TITRE']}</h1>
+		</div>
+		$doc_content
+HERE;
+		echo '</div>';
+/*          
+    echo <<<HERE
+<h2 class="theme">{$_SESSION['FICHE_TITRE']}</h2>
+<table id="table_documents">
+ <thead>
+  <tr>
+   <th>Titre</th><th>DOCUMENT</th>
+  </tr>
+ </thead>
+ <tbody>
+  $tr
+ </tbody>
+</table>
+  		
+$nouveau
+  		
+<div id="admin"><a href="../Php/index.php?EX=admin"></a></div>
+HERE;
+ */  
+  } // showDocuments($_data
+  
+  public function showDoc($_data)
 	{
 		echo '
 			<div class="grid-x">
@@ -299,14 +404,29 @@ HERE;
 					<h1 class="h2">' . $_data['TITRE'] . '</h1>
 				</div>
 				<div class="cell">
-					<p class="card-section">' . $_data['DOCUMENTS'] . '</p>' . $_data['ID_DOC'].' 
+					<p class="card-section">' . $_data['DOCUMENT'] . '</p>' . $_data['ID_DOC'].' 
 				</div>
 			</div>			
 		';	
 	} // showDoc($_data)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 	
 	
-	public function showDocuments($_data)
+	
+	public function showDocumentDetail($_data)
 	{ 	
 		echo '<div class="grid-x">';
 		$doc_content='';
@@ -320,7 +440,7 @@ HERE;
 								</h2> 
 							</div>
 							<div class="cell large-12">
-								<p class="card-section">' . $val['DOCUMENTS'] . '</p>' 
+								<p class="card-section">' . $val['DOCUMENT'] . '</p>' 
 								. $val['ID_DOC'] .'-'. $val['ID_FICHE'].'
 							</div>
 							<div class="cell large-12 text-center">
@@ -541,29 +661,27 @@ HERE;
 	}
 	
 	public function formMetier($_data)
-	{
-		if ($_data)
+  { 	 
+    if ($_data)
     {
   	  $ex = 'update_metier&ID_METIER='.$_data['ID_METIER'];
-      $fiche = $_data['METIER'];
- 	  $delete = '<p><a href="../Php/index.php?EX=delete_metier&amp;ID_METIER='.$_data['ID_METIER'].'"><button>Supprimer</button></a></p>';
+      $theme = $_data['METIER'];
+ 	  $delete = '<p class="delete"><a href="../Php/index.php?EX=delete_metier&amp;ID_METIER='.$_data['ID_METIER'].'"><button>Supprimer</button></a></p>';
     }
     else
     {
   	  $ex = 'insert_metier';
-      $fiche = '';
+      $theme = '';
  	  $delete = '';
     }
-	
-	
     
     echo <<<HERE
 <form action="../Php/index.php?EX=$ex" method="post">
  <fieldset>
   <legend>Formulaire</legend>
   <p>
-   <label for="titre_fiche">METIER</label>
-   <input id="titre_fiche" name="METIER" value="$fiche" size="15" maxlength="50" />
+   <label for="theme">Thème</label>
+   <input id="theme" name="METIER" value="$theme" size="15" maxlength="50" />
   </p>
   <p class="submit">
    <input type="submit" value="Ok" />
@@ -574,7 +692,8 @@ $delete
 HERE;
   	 
   	return;
-	}
+  
+  } // formTheme($_data)
 	
 	public function showEmployer()
 	{
@@ -610,7 +729,40 @@ HERE;
 	}
 	
 	
-	
+	   public function formFiche($_data)
+  { 	 
+    if ($_data)
+    {
+  	  $ex = 'update_fiche&ID_FICHE='.$_data['ID_FICHE'];
+	  $fiche = $_data['FICHE_TITRE'];
+ 	  $delete = '<p class="delete"><a href="../Php/index.php?EX=delete_fiche&amp;ID_FICHE='.$_data['ID_FICHE'].'"><button>Supprimer</button></a></p>';
+    }
+    else
+    {
+  	  $ex = 'insert_fiche';
+      $fiche = '';
+ 	  $delete = '';
+    }
+    
+    echo <<<HERE
+<form action="../Php/index.php?EX=$ex" method="post">
+ <fieldset>
+  <legend>Formulaire</legend>
+  <p>
+   <label for="theme">Titre</label>
+   <input id="theme" name="FICHE_TITRE" value="$fiche" size="45" maxlength="150" />
+  </p>
+  <p class="submit">
+   <input type="submit" value="Ok" />
+  </p>
+ </fieldset>
+</form>
+$delete
+HERE;
+  	 
+  	return;
+  
+  } // formTheme($_data)
 	
 		
  

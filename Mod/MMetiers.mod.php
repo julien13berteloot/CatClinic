@@ -29,7 +29,74 @@ class MMetiers
 		return;
   
 	} // SetValue($_value)
+	
+	public function SelectAllMetier()
+	{
+		$query = 	'select ID_METIER, METIER
+					from METIERS
+					order by METIER';
+
+		$result = $this->conn->prepare($query);
+
+		$result->execute() or die ($this->Error($result));
   
+		return $result->fetchAll();
+   
+	} // SelectAllMetier()
+  
+	public function UpdateMetier()
+	{  
+		$query = 	'update METIERS
+					set METIER = :METIER
+					where ID_METIER = :ID_METIER';
+  
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':ID_METIER', $this->id_metier, PDO::PARAM_INT);
+		$result->bindValue(':METIER', $this->value['METIER'], PDO::PARAM_STR);
+  
+		$result->execute() or die ($this->Error($result));
+  	
+		return;
+  
+	} // UpdateMetier()
+  
+	public function DeleteMetier()
+	{	  
+		$query = 'delete from METIERS
+              where ID_METIER = :ID_METIER';
+  
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':ID_METIER', $this->id_metier, PDO::PARAM_INT);
+  
+		$result->execute() or die ($this->Error($result));
+  	
+		return;
+  	 
+	} // DeleteMetier()
+  
+	public function InsertMetier()
+	{
+		$query = 'insert into METIERS (METIER)
+              values(:METIER)';
+ 
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':METIER', $this->value['METIER'], PDO::PARAM_STR);
+  
+		$result->execute() or die ($this->Error($result));
+  	
+		return;
+  
+	} // InsertMetier()
+	
+	
+	
+	
+	
+	
+/*  
 	public function SelectAll()
 	{
 		$query = 'select ID_METIER, METIER
@@ -95,13 +162,7 @@ class MMetiers
   } // Update()
 
   
-  /**
-   * Récupère les erreurs SQL
-   * @access private
-   * @param statement résultat de la préparation
-   *
-   * @return none;
-   */
+*/
   private function ErrorSQL($result)
   {
   	// Récupère le tableau des erreurs
