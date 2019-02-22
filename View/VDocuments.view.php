@@ -455,12 +455,164 @@ HERE;
 		return;	
 
 	} // formDocument($_data)
+ 
+	public function formEmployer($_data)
+	{
+
+	$data_themes = isset($_data['METIERS']) ? $_data['METIERS'] : '';
+
+  	$data_doc = isset($_data['EMPLOYER']) ? $_data['EMPLOYER'] : '';
+  	 
+  	$mthemes = new MMetiers();
+  	$themes = $mthemes->SelectAll();
+
+  	$selected = '';
+  	$options = '';
+  	foreach ($themes as $val1)
+  	{
+  	  if ($data_themes)
+  	  {
+  	    foreach ($data_themes as $val2)
+  	    {
+			
+  	      $selected = (isset($val2['ID_METIER']) && $val1['ID_METIER'] == $val2['ID_METIER']) ? 'selected="selected"' : '';
+  	    
+  	      if ($selected) break;
+  	    }
+  	  }
+	  
+	  $options .= '<option '.$selected.' value="'.$val1['ID_METIER'].'">'.$val1['METIER'].'</option>';	  
+  	  	
+  	  $delete = $data_doc ? '<p class="delete"><a href="../Php/index.php?EX=delete&amp;ID_EMPLOYER='.$data_doc['ID_EMPLOYER'].'"><button>Supprimer</button></a></p>' : '';
+  	}
+
+  	if ($data_doc)
+  	{
+  	  $titre = $data_doc['PRENOM'];
+ 	  $auteur = $data_doc['NOM'];
+
+ 	  $ex = 'update&amp;ID_EMPLOYER='.$data_doc['ID_EMPLOYER'];
+  	}
+  	else
+  	{
+  	  $titre = '';
+  	  $auteur = '';
+ 	  $ex = 'insert_employer';
+  	}
+	
+	
+	
+	
+	
+  	
+  	echo <<<HERE
+<form action="../Php/index.php?EX=$ex" method="post" enctype="multipart/form-data">
+ <fieldset>
+  <legend>Formulaire</legend>
+  <p>
+   <label for="prenom">PRENOM</label>
+   <input id="prenom" name="PRENOM" value="$titre" size="15" maxlength="50" />
+  </p>
+  <p>
+   <label for="nom">NOM</label>
+   <input id="nom" name="NOM" value="$auteur" size="15" maxlength="50" />
+  </p>
   
   
+  <p>
+   <label for="metier">METIER</label>
+   <select id="metier" name="ID_METIER[]" multiple="multiple">
+    $options
+   </select>
+  </p>
   
-  
-  
-  
-  
+
+  </p>
+  <p class="submit">
+   <input type="submit" value="Ok" />
+  </p>
+ </fieldset>
+</form>
+$delete
+HERE;
+  	
+  	return; 
+	   
+	}
+	
+	public function formMetier($_data)
+	{
+		if ($_data)
+    {
+  	  $ex = 'update_metier&ID_METIER='.$_data['ID_METIER'];
+      $fiche = $_data['METIER'];
+ 	  $delete = '<p><a href="../Php/index.php?EX=delete_metier&amp;ID_METIER='.$_data['ID_METIER'].'"><button>Supprimer</button></a></p>';
+    }
+    else
+    {
+  	  $ex = 'insert_metier';
+      $fiche = '';
+ 	  $delete = '';
+    }
+	
+	
+    
+    echo <<<HERE
+<form action="../Php/index.php?EX=$ex" method="post">
+ <fieldset>
+  <legend>Formulaire</legend>
+  <p>
+   <label for="titre_fiche">METIER</label>
+   <input id="titre_fiche" name="METIER" value="$fiche" size="15" maxlength="50" />
+  </p>
+  <p class="submit">
+   <input type="submit" value="Ok" />
+  </p>
+ </fieldset>
+</form>
+$delete
+HERE;
+  	 
+  	return;
+	}
+	
+	public function showEmployer()
+	{
+		$tr = '';
+    foreach ($_data as $val)
+    {
+      
+      	// Concaténation avec l'ancre et le titre de la catégorie
+      	$tr .= '<tr><td><a href="../Php/index.php?EX=form_metier&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'</a></td><td>'.$val['NOM'].'</td>';
+      
+    }
+	
+	$nouveau = isset($_SESSION['ADMIN_DOC']) ? '<p class="nouveau"><a href="../Php/index.php?EX=form_document"><button>NOUVEAU DOCUMENT</button></a></p>' : '';
+	
+	
+	echo <<<HERE
+<h2>{$_SESSION['METIER']}</h2>
+<table id="table_documents">
+ <thead>
+  <tr>
+   <th>PRENOM</th><th>NOM</th>
+  </tr>
+ </thead>
+ <tbody>
+  $tr
+ </tbody>
+</table>
+  		
+$nouveau
+  		
+<div id="admin"><a href="../Php/index.php?EX=admin"></a></div>
+HERE;
+	}
+	
+	
+	
+	
+		
+ 
 } // VDocuments
 ?>

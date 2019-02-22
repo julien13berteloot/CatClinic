@@ -26,13 +26,85 @@
 	  
 		} // SetValue($_value)
 		
+		
+		public function SelectAllEmployer()
+		{	
+			$query = 'select ID_EMPLOYER, PRENOM, NOM
+					  from EMPLOYER 
+					  order by PRENOM';
+
+			$result = $this->conn->prepare($query);
+
+			$result->bindValue(':ID_METIER', $this->value['ID_METIER'], PDO::PARAM_INT);
+			 
+			$result->execute() or die ($this->ErrorSQL($result));
+			
+			return $result->fetchAll();
+   
+		} // SelectAll()
+		
+		
+		public function Select()
+		{ 
+			$query = 'select ID_EMPLOYER, NOM, PRENOM
+						from EMPLOYER
+						where ID_EMPLOYER = :ID_EMPLOYER';
+  
+			$result = $this->conn->prepare($query);
+
+			$result->bindValue(':ID_EMPLOYER', $this->id_employer, PDO::PARAM_INT);
+    
+			$result->execute() or die ($this->ErrorSQL($result));
+    
+			return $result->fetch();
+  
+		} // Select()
+		
+		public function SelectAll()
+		{	  
+			$query = 'select E.ID_EMPLOYER, PRENOM, NOM
+					  from EMPLOYER E, METIERS_EMPLOYERS ME
+					  where ME.ID_EMPLOYER = E.ID_EMPLOYER
+					  and ME.ID_METIER = :ID_METIER
+					  order by PRENOM';
+
+			$result = $this->conn->prepare($query);
+
+			$result->bindValue(':ID_METIER', $this->value['ID_METIER'], PDO::PARAM_INT);
+			 
+			$result->execute() or die ($this->ErrorSQL($result));
+			
+			return $result->fetchAll();
+   
+		} // SelectAll()
+		
+		public function SelectMetierEmployer()
+		{
+			$query = 'select ID_METIER
+              from METIERS_EMPLOYERS
+  			  where ID_EMPLOYER = :ID_EMPLOYER';
+  
+			$result = $this->conn->prepare($query);
+
+			$result->bindValue(':ID_EMPLOYER',$this->id_employer, PDO::PARAM_INT);
+   	 
+			$result->execute() or die ($this->ErrorSQL($result));
+  	
+			return $result->fetchAll();
+  
+		} // SelectThemesDocuments()
+		
+		
+		
+		
+		
 		public function SelectionAllEmployerMetier()
 		{	
 			$query =	'select E.ID_EMPLOYER, NOM, PRENOM, M.ID_METIER, METIER
 						from EMPLOYER E, METIERS M, METIERS_EMPLOYERS ME
 						where ME.ID_EMPLOYER = E.ID_EMPLOYER
 						and M.ID_METIER = ME.ID_METIER
-						order by E.NOM';
+						order by M.METIER';
 	
 			$result = $this->conn->prepare($query);
   	 
@@ -73,26 +145,7 @@
 			return $result->fetchAll();
 		} // SelectionEmployerAvs(
 		
-		
-		
-		
-		/*
-		public function SelectAllEmployer()
-		{		
-			$query = 	'select ID_EMPLOYER, NOM,
-						PRENOM
-						from EMPLOYER';
-	 
-			$result = $this->conn->prepare($query);
-	 
-			$result->execute();
-			
-			return $result->fetchAll();
-  
-		} // SelectAllEmployer()
-		*/
-		/*
-		public function InsertEmployer()
+		public function Insert()
 		{				
 			$query = 	"insert into EMPLOYER (NOM, PRENOM)
 						values(:NOM, :PRENOM)";									
@@ -111,44 +164,31 @@
 			return $this->value;
 			
 		} // InsertEmployer()
-		*/
-
-		/*
-		public function gg()
+		
+		public function InsertMetiersEmployers()
 		{
-			$ID_METIER = $this->value['ID_METIER'];
-			
-			$query= "insert into metiers_employers
-					(ID_METIER, ID_EMPLOYER)
-					values('$ID_METIER', $this->id_employer)";
-					
-			$result = $this->conn->prepare($query);
-						  
-			$result->execute();
-							
-			return;
-		}			
-		*/
-		
-/*		
-		
-	insert into metiers_employers
-	(ID_METIER, ID_EMPLOYER)
-	values('2', '2')
 
-
-	$ID_PAGE = $this->value['ID_PAGE'];
-								
-	$query = "insert into PAGES_DOCUMENTS (ID_PAGE, ID_DOCUMENT)
-				values('$ID_PAGE', $this->id_document)";
-						  
-	$result = $this->conn->prepare($query);
-						  
-	$result->execute();
-							
-	return;	
+		$query = 'insert into METIERS_EMPLOYERS (ID_EMPLOYER, ID_METIER)
+              values(:ID_EMPLOYER, :ID_METIER)';
+  
+  
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':ID_EMPLOYER',$this->id_employer, PDO::PARAM_INT);
+		$result->bindValue(':ID_METIER',$this->value['ID_METIER'], PDO::PARAM_INT);
+   	 
+		$result->execute() or die ($this->ErrorSQL($result));
 		
-*/		
+		}
+		
+
+		
+		
+		
+		
+		
+		
+	
 		
 		
 		

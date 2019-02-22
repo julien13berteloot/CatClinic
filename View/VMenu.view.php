@@ -45,6 +45,8 @@ class VMenu
 
 	$nouveau = isset($ID_USER)? '<li><a href="../Php/index.php?EX=form_fiche"><button>Nouvelle fiche</button></a></li>' : '';
 	$nouveauDoc = isset($ID_USER) ? '<li><a href="../Php/index.php?EX=form_document"><button>Nouveu document</button></a></li>' : '';
+	$nouveauMetier =  '<li><a href="../Php/index.php?EX=form_metier"><button>Nouveu Metier</button></a></li>';
+	$nouveau_employer =  isset($ID_USER) ? '<li><a href="../Php/index.php?EX=form_employer"><button>Nouveau employer</button></a></li>' : '';
 	  
 	echo'
 	<div class="grid-container">
@@ -71,6 +73,8 @@ class VMenu
 		$li 
 		$nouveau
 		$nouveauDoc
+		$nouveauMetier
+		$nouveau_employer
 	</ul>		
 HERE;
 

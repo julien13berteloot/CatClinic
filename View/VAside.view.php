@@ -33,6 +33,15 @@ class VAside
 		$mdocuments = new MDocuments();
 		$_data['DOCUMENTS'] = $mdocuments->SelectAllDocument();
 		$_data['DOCUMENTS_FICHE'] = $mdocuments->SelectAllFicheDocument();
+		// Les Employers
+		$memployers = new MEmployers();
+		$_data['EMPLOYER'] = $memployers->SelectAllEmployer();
+		$_data['EMPLOYER_METIER'] = $memployers->SelectionAllEmployerMetier();
+		$_data['EMPLOYER_DOC'] = $memployers->SelectionEmployerDocteur();
+		$_data['EMPLOYER_AVS'] = $memployers->SelectionEmployerAvs();
+		// Les Metiers
+		$mmetier = new MMetiers();
+		$_data['METIER'] = $mmetier->SelectAll();
 		
 		// ASIDE - Les fiches par titres
 			
@@ -74,6 +83,68 @@ class VAside
 			$fiches_documents .= '<li><a href="'.$href.'">'.$val['TITRE'].'</a></li>';			
 		}
 		
+		//Les employers
+		$employer = '';
+		foreach ($_data['EMPLOYER_METIER'] as $val)
+		{
+			if (!isset($_SESSION['ADMIN']))
+			{
+		
+				$employer .= '<li><a href="../Php/index.php?EX=form_employer&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'<->'.$val['NOM'].'--'.$val['METIER'].'</a></li>';
+			}
+			else
+			{
+			
+				$employer .= '<li><a href="../Php/index.php?EX=employer&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'<->'.$val['NOM'].'--'.$val['METIER'].'</a></li>';
+			}
+		}
+		
+		$employer_doc = '';
+		foreach ($_data['EMPLOYER_DOC'] as $val)
+		{
+			if (!isset($_SESSION['ADMIN']))
+			{
+		
+				$employer_doc .= '<li><a href="../Php/index.php?EX=form_employer&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'<->'.$val['NOM'].'--'.$val['METIER'].'</a></li>';
+			}
+			else
+			{
+			
+				$employer_doc .= '<li><a href="../Php/index.php?EX=employers&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'<->'.$val['NOM'].'--'.$val['METIER'].'</a></li>';
+			}
+		}
+		
+		$employer_avs = '';
+		foreach ($_data['EMPLOYER_AVS'] as $val)
+		{
+			if (!isset($_SESSION['ADMIN']))
+			{
+		
+				$employer_avs .= '<li><a href="../Php/index.php?EX=form_employer&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'<->'.$val['NOM'].'--'.$val['METIER'].'</a></li>';
+			}
+			else
+			{
+			
+				$employer_avs .= '<li><a href="../Php/index.php?EX=form_employer&amp;ID_EMPLOYER='.$val['ID_EMPLOYER'].'">'.$val['PRENOM'].'<->'.$val['NOM'].'--'.$val['METIER'].'</a></li>';
+			}
+		}
+		
+		//Metiers
+		$metier = '';
+		foreach ($_data['METIER'] as $val)
+		{
+			if (!isset($_SESSION['ADMIN']))
+			{
+		
+				$metier .= '<li><a href="../Php/index.php?EX=form_metier&amp;ID_METIER='.$val['ID_METIER'].'&amp;METIER='.$val['METIER'].'">'.$val['METIER'].'</a></li>';
+			}
+			else
+			{
+			
+				$metier .= '<li><a href="../Php/index.php?EX=form_metier&amp;ID_METIER='.$val['ID_METIER'].'&amp;METIER='.$val['METIER'].'">'.$val['METIER'].'</a></li>';
+			}
+		}
+		
 		echo '
 		
 		
@@ -113,7 +184,32 @@ HERE;
 										$fiches_documents		
 									</ul>
 HERE;
-		echo '						
+		echo '	
+						</div>
+						<div  class="cell large-12">
+								<h2 class="callout">Employers</h2>	
+							</div>
+							<div class="cell large-12">
+		';
+									echo <<<HERE
+									<ul>
+										$employer		
+									</ul>
+									<h3>Les docteurs</h3>
+									<ul>
+										$employer_doc
+									</ul>
+									<h3>Les AVS</h3>
+									<ul>
+										$employer_avs
+									</ul>
+									<h3>Metiers</h3>
+									<ul>
+										$metier
+									</ul>
+HERE;
+		echo '
+		
 							</div>
 							<div  class="cell large-12">
 								<h2 class="callout">Auteurs</h2>	
@@ -142,6 +238,7 @@ HERE;
 			
 		
 		';
+
 	}
 	
 	public function formFiche($_data)

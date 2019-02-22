@@ -35,9 +35,22 @@ switch($EX)
 	case 'update_fiche'    	: update_fiche();   	break;
 	case 'form_document'    : form_document();  	break;
 	
+	case 'employers'		: employers();			break;
+	case 'form_metier'		: form_metier();		break;
+	case 'insert_metier'	: insert_metier();		break;
+	case 'delete_metier'	: delete_metier();		break;
+	case 'update_metier'	: update_metier();		break;
+	
+	
+	case 'form_employer'	: form_employer();	break; 
+	
+	case 'insert_employer'  : insert_employer();break;
+	
 	case 'insert_document'  : insert_document();   break;
 	case 'update_document'  : update_document();   break;
 	case 'delete_document'  : delete_document();   break;
+	
+
 	
  // case 'fiche'    		: fiche();    		break;
  // case 'page' 			: page();			exit;
@@ -344,6 +357,149 @@ function delete_document()
 	return;
 
 } // delete()
+
+
+
+function employers()
+{
+
+	$_SESSION['ID_METIER'] = isset($_GET['ID_METIER']) ? $_GET['ID_METIER'] : $id_fiche;
+	$_SESSION['METIER'] = isset($_GET['METIER']) ? $_GET['METIER'] : $_SESSION['METIER'];
+
+	$value['ID_METIER'] = $_SESSION['ID_METIER'];
+	$mdocuments = new MEmployers();
+	$mdocuments->SetValue($value);
+	$data['EMPLOYER'] = $mdocuments->SelectAll();
+
+	global $content;
+
+	$content['title'] = 'Liste des EMPLOYER';
+	$content['class'] = 'VDocuments';
+	$content['method'] = 'showEmployer';
+	$content['arg'] = $data;
+
+	return;
+	
+}
+
+function form_metier()
+{
+	$data = isset($_GET['ID_METIER']) ? $_GET : '';
+	
+	global $content;
+
+	$content['title'] = 'Nouveau Metiers';
+	$content['class'] = 'VDocuments';
+	$content['method'] = 'formMetier';
+	$content['arg'] = $data;
+
+  return;
+}
+function insert_metier()
+{
+  $metiers = new MMetiers();
+  $metiers->SetValue($_POST);
+  $data = $metiers->InsertMetier();
+  
+  //debug($data);
+  //exit;
+
+  home();
+
+  return;
+
+} // insert_theme()
+function delete_metier()
+{
+	$metiers = new MMetiers($_GET['ID_METIER']);
+	$data = $metiers->Delete();
+
+	//debug($data);
+	//exit;
+	
+	home();
+
+	return;
+
+} // delete_theme()
+function update_metier()
+{
+	$metiers = new MMetiers($_GET['ID_METIER']);
+	$metiers->SetValue($_POST);
+	$metiers->Update();
+
+	home();
+
+	return;
+
+} // update_theme()
+
+
+
+function form_employer($id_metier = null)
+{
+if (isset($_GET['ID_EMPLOYER']))
+  {
+    $memployers = new MEmployers($_GET['ID_EMPLOYER']);
+    $data['EMPLOYER'] = $memployers->Select();
+    
+    $data['METIERS'] = $memployers->SelectMetierEmployer();
+  }
+  else
+  {
+  	$data['METIERS'][0]['ID_METIER'] = $_SESSION['ID_METIER'];
+  }
+  
+
+  global $content;
+	
+  $content['title'] = 'Nouveau EMPLOYER';
+  $content['class'] = 'VDocuments';
+  $content['method'] = 'formEmployer';
+  $content['arg'] = $data;
+  
+  return;
+ 
+}
+
+
+function insert_employer()
+{
+
+  $value['PRENOM'] = $_POST['PRENOM'];
+  $value['NOM'] = $_POST['NOM'];
+  	 
+  $memployers = new MEmployers();
+  $memployers->SetValue($value);
+  $id_m = $memployers->Insert();
+  
+  $val['ID_EMPLOYER'] = $id_m;
+  
+  foreach ($_POST['ID_METIER'] as $v)
+  {
+  	$val['ID_METIER'] = $v;  	 
+    
+    $memployers->SetValue($val);
+    $memployers->InsertMetiersEmployers();
+  }
+  
+  employers($_SESSION['ID_METIER']);
+
+  return;
+
+} // insert()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
