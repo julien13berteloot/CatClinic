@@ -26,10 +26,10 @@ class VFooter
 	public function showFooter()
 	{
 		echo '
-			<div class="grid-x ma_cellule_bleu align-center" style="padding:150px 0;" >
+			<div class="grid-x">
 				<div class="cell large-12 text-center">
 					<header>
-						<h1>FOOTER</h1>
+						<p>footer</p>
 					</header>
 				</div>	
 			</div>

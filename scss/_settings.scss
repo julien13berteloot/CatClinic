@@ -80,13 +80,6 @@ $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
 $black: #0a0a0a;
 $white: #fefefe;
-//---------------------------MES COULEUR---------------------------//
-$monbleu: 	#0787ce;
-$monNoir:	#000000;
-$monOrange: #FFA500;
-$monGris: 	#DCDCDC;
-$monBlanc: 	#FFFFFF;
-//-----------------------------------------------------------------//
 $body-background: $white;
 $body-font-color: $black;
 $body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
@@ -96,16 +89,8 @@ $global-padding: 1rem;
 $global-position: 1rem;
 $global-weight-normal: normal;
 $global-weight-bold: bold;
-
-//-------------------RADIUS----------------------------------------//
 $global-radius: 0;
-$global-radius-mon-bouton: 10px;
-//-----------------------------------------------------------------//
-
-//-------------------ESPACEMENT <li> MENU PRINCIPAL ---------------//
-//$global-menu-padding: 0.7rem 1rem;
-$global-menu-padding: 0.7rem 5rem;
-//-----------------------------------------------------------------//
+$global-menu-padding: 0.7rem 1rem;
 $global-menu-nested-margin: 1rem;
 $global-text-direction: ltr;
 $global-flexbox: true;
@@ -183,12 +168,8 @@ $code-font-weight: $global-weight-normal;
 $code-background: $light-gray;
 $code-border: 1px solid $medium-gray;
 $code-padding: rem-calc(2 5 1);
-//-------------------COULEUR - DEFAULT - LIEN ---------------------//
-//$anchor-color: $primary-color;
-//$anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
-$anchor-color:$monNoir;
-$anchor-color-hover:$monbleu;
-//-----------------------------------------------------------------//
+$anchor-color: $primary-color;
+$anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
 $anchor-text-decoration: none;
 $anchor-text-decoration-hover: none;
 $hr-width: $global-width;
@@ -259,7 +240,7 @@ $accordion-content-padding: 1rem;
 $accordionmenu-padding: $global-menu-padding;
 $accordionmenu-nested-margin: $global-menu-nested-margin;
 $accordionmenu-submenu-padding: $accordionmenu-padding;
-$accordionmenu-arrows: false;
+$accordionmenu-arrows: true;
 $accordionmenu-arrow-color: $primary-color;
 $accordionmenu-item-background: null;
 $accordionmenu-border: null;
@@ -272,15 +253,6 @@ $accordionmenu-arrow-size: 6px;
 // 9. Badge
 // --------
 
-$badge-background: white;
-$badge-color: $monbleu;
-$badge-color-alt: $black;
-$badge-palette: $foundation-palette;
-$badge-padding: 0.2em;
-$badge-minwidth: 2.0em;
-$badge-font-size: 4rem;
-
-/*
 $badge-background: $primary-color;
 $badge-color: $white;
 $badge-color-alt: $black;
@@ -288,7 +260,7 @@ $badge-palette: $foundation-palette;
 $badge-padding: 0.3em;
 $badge-minwidth: 2.1em;
 $badge-font-size: 0.6rem;
-*/
+
 // 10. Breadcrumbs
 // ---------------
 
@@ -311,27 +283,11 @@ $button-font-family: inherit;
 $button-padding: 0.85em 1em;
 $button-margin: 0 0 $global-margin 0;
 $button-fill: solid;
-
-
-//$button-background: $primary-color;
-$button-background: $monbleu;
-
-
-//$button-background-hover: scale-color($button-background, $lightness: -15%);
-$button-background-hover: $white;
-
-
-
+$button-background: $primary-color;
+$button-background-hover: scale-color($button-background, $lightness: -15%);
 $button-color: $white;
-//$button-color: $monNoir;
-
 $button-color-alt: $black;
-
-//$button-radius: $global-radius;
-$button-radius: $global-radius-mon-bouton;
-
-
-
+$button-radius: $global-radius;
 $button-hollow-border-width: 1px;
 $button-sizes: (
   tiny: 0.6rem,
@@ -358,20 +314,11 @@ $buttongroup-radius-on-each: true;
 // 13. Callout
 // -----------
 
-/*------------------------------------------------*/
-//$callout-background: $white;
-$callout-background: $monbleu;
-//$callout-background-fade: 85%;
-$callout-background-fade: 0;
-//$callout-border: 0 1px solid rgba($black, 0.25);
-$callout-border: 0px;
-/*------------------------------------------------*/
-//$callout-margin: 0 0 1rem 0;
-$callout-margin: 0;
-/*------------------------------------------------*/
-//$callout-padding: 1rem;
-$callout-padding: 0rem;
-/*------------------------------------------------*/
+$callout-background: $white;
+$callout-background-fade: 85%;
+$callout-border: 1px solid rgba($black, 0.25);
+$callout-margin: 0 0 1rem 0;
+$callout-padding: 1rem;
 $callout-font-color: $body-font-color;
 $callout-font-color-alt: $body-background;
 $callout-radius: $global-radius;
@@ -383,7 +330,7 @@ $callout-link-tint: 30%;
 $card-background: $white;
 $card-font-color: $body-font-color;
 $card-divider-background: $light-gray;
-$card-border: 0px solid $monbleu;
+$card-border: 1px solid $light-gray;
 $card-shadow: none;
 $card-border-radius: $global-radius;
 $card-padding: $global-padding;
@@ -571,28 +518,14 @@ $maincontent-class: 'off-canvas-content';
 // ---------
 
 $orbit-bullet-background: $medium-gray;
-/*-------------------------------GESTIONS PUCES active-----------------------------*/
-//$orbit-bullet-background-active: $dark-gray;
-$orbit-bullet-background-active: $monbleu;
-/*---------------------------------------------------------------------------------*/
+$orbit-bullet-background-active: $dark-gray;
 $orbit-bullet-diameter: 1.2rem;
 $orbit-bullet-margin: 0.1rem;
-/*----------------------------------GESTIONS DES PUCES-----------------------------*/
-//$orbit-bullet-margin-top: 0.8rem;
-$orbit-bullet-margin-top: -7rem;
-/*---------------------------------------------------------------------------------*/
-//$orbit-bullet-margin-bottom: 0.8rem;
-//$orbit-bullet-margin-bottom: 5.4rem;
-$orbit-bullet-margin-bottom: 5rem;
-/*-----------------------------GESTIONS COULEURS PUCES-----------------------------*/
-//$orbit-caption-background: rgba($black, 0.5);
-$orbit-caption-background: rgba($monbleu, 0.5);
-/*---------------------------------------------------------------------------------*/
+$orbit-bullet-margin-top: 0.8rem;
+$orbit-bullet-margin-bottom: 0.8rem;
+$orbit-caption-background: rgba($black, 0.5);
 $orbit-caption-padding: 1rem;
-/*-----------------------------GESTIONS COULEURS NAV-------------------------------*/
-//$orbit-control-background-hover: rgba($black, 0.5);
-$orbit-control-background-hover: rgba($monbleu, 0.5);
-/*---------------------------------------------------------------------------------*/
+$orbit-control-background-hover: rgba($black, 0.5);
 $orbit-control-padding: 1rem;
 $orbit-control-zindex: 10;
 
@@ -913,9 +846,7 @@ $tooltip-radius: $global-radius;
 // -----------
 
 $topbar-padding: 0.5rem;
-//-------------- couleur top-bard ----------------------------//
-$topbar-background: $monbleu;
-//------------------------------------------------------------//
+$topbar-background: $light-gray;
 $topbar-submenu-background: $topbar-background;
 $topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
 $topbar-input-width: 200px;

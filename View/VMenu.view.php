@@ -35,18 +35,16 @@ class VMenu
 		else
 		{
 			$li .= '<li><a href="../Php/index.php?EX=home">Home</a></li>';
-			$li .= '<li><a href="../Html/contact.html">Contact</a></li>';
 			$li .= '<li><a href="../Php/index.php?EX=admin">Connexion</a></li>';	
 		}
-	
-		$nouveauMetier = isset($_SESSION['ADMIN']) && (isset($_SESSION['ID_USER']))? '<li><a href="../Php/index.php?EX=form_metier"><button>nouveau Metier</button></a></li>' : '';
-		$nouvelleFiche = isset($_SESSION['ADMIN']) && (isset($_SESSION['ID_USER']))? '<li><a href="../Php/index.php?EX=form_fiche"><button>nouvelle Fiches</button></a></li>' : '';
+		
+		//$insert_document = (isset($_SESSION['ADMIN']) && (isset($_SESSION['ID_USER']))) ? '<li><a href="../Php/index.php?EX=form_document">Nouveau document</a></li>' : '';
 	  
 echo'
 	<div class="grid-container">
 	
-		<header id="header" class="header" style="padding:100px; background-color:red;">
-			GGG
+		<header id="header" class="header text-center">
+			<p>header</p>
 		</header>
 
 		<nav data-sticky-container>
@@ -62,8 +60,7 @@ echo <<<HERE
 						<ul class="vertical medium-horizontal menu align-center" data-responsive-menu="accordion ">
 							<!--<h1 id="logo" title="Logo"><a href="../Php/index.php?EX=home&amp;ID_USER=$ID_USER">Logo</a></h1>-->
 							$li 
-							$nouveauMetier
-							$nouvelleFiche
+						
 						</ul>		
 HERE;
 echo '											

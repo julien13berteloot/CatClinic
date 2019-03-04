@@ -23,40 +23,41 @@ $EX = isset($_REQUEST['EX']) ? $_REQUEST['EX'] : 'home';
 // Contrôleur
 switch($EX)
 {
-	case 'home'         	: home();         		break;
-	case 'document'     	: document();     		break;
-	case 'doc'     			: doc();     			break;
-	case 'connect' 			: connect(); 			break;
-	case 'admin' 			: admin(); 				break; 
-	case 'deconnect'    	: deconnect();    		break;
+	case 'home'         		: home();         			break;
+	case 'connect' 				: connect(); 				break;
+	case 'admin' 				: admin(); 					break; 
+	case 'deconnect'    		: deconnect();    			break;
+	case 'admin_fiche'    		: admin_fiche();    		break;
+	case 'admin_doc'    		: admin_doc();    			break;
 	
-	case 'fiche' 			: fiche(); 	 			break;
-	case 'form_fiche' 		: form_fiche(); 		break;
-	case 'update_fiche'    	: update_fiche();       break;
-	case 'insert_fiche'     : insert_fiche();       break;
-	case 'delete_fiche'    	: delete_fiche();       break;
+	case 'form_fiche'			: form_fiche();				break;
+	case 'insert_fiche'			: insert_fiche();			break;
+	case 'delete_fiche'			: delete_fiche();			break;
+	case 'update_fiche'    		: update_fiche();       	break;
 	
-	case 'form_document'    : form_document();      break; 
-	case 'insert_document'  : insert_document();    break;
-    case 'update_document'  : update_document();    break;
-	case 'delete_document'  : delete_document();    break;
+	case 'document'    			: document();       		break;
+	case 'form_document'		: form_document();			break;
+	case 'insert_document'  	: insert_document();    	break;
+	case 'delete_document'		: delete_document();		break;
+	case 'update_document'  	: update_document();    	break;
 	
-	case 'metier' 			: metier(); 	 		break;
-	case 'form_metier' 		: form_metier(); 		break;
-	case 'update_metier'    : update_metier();      break;
-	case 'delete_metier'    : delete_metier();      break;
-	case 'insert_metier'    : insert_metier();      break;
+	case 'admin_spe'    		: admin_spe();    			break;	
 	
-	case 'form_employer'    : form_employer();      break;
-	case 'insert_employer'  : insert_employer();    break;
-	case 'update_employer'  : update_employer();    break;
-	case 'delete_employer'  : delete_employer();    break;
+	case 'formulaire_specialite': formulaire_specialite();	exit();
+	//case 'insert_Specialites'   : insert_Specialites();		exit();
+								
+								
+	
+	//case 'fiche'			: fiche();				break;
 	
 		
-
 	
- // case 'fiche'    		: fiche();    		break;
- // case 'page' 			: page();			exit;
+	
+	
+	
+	
+	
+	
 }
 
 // Mise en page
@@ -69,38 +70,27 @@ require('../View/layout.view.php');
  */
 function home()
 {
-	
-
 	// Les Fiches
-	//$mfiches = new MFiches();
-	//$data['FICHES_TITRES'] = $mfiches->SelectAllFiches();
-	// Les Documents
-	$mdocuments = new MDocuments();
-	//$data['DOCUMENTS'] = $mdocuments->SelectAllDocument();
-	$data['DOCUMENTS_FICHE'] = $mdocuments->SelectAllFicheDocument();
-	// Les Employers
-	$memployers = new MEmployers();
-	//$data['EMPLOYER'] = $memployers->SelectionAllEmployerMetier();
-	$data['EMPLOYER_DOCTEUR'] = $memployers->SelectionEmployerDocteur();
-	$data['EMPLOYER_AVS'] = $memployers->SelectionEmployerAvs();
+	$mfiches = new MFiches();
+	$data['FICHES'] = $mfiches-> SelectAllFicheDocuement();
+	
 	// Les Specialites
 	$mspecialites = new MSpecialites();
-	$data['SPECIALITES'] = $mspecialites->SelectAllSpecialites();
+	$data['SPECIALITES'] = $mspecialites-> SelectAllSpecialites();  
 	
 	//debug($data);
 	//exit;
 	
 	global $content;
 	
-	$content['title'] = 'CatClinick-CSS-HTML';
-	$content['class'] = 'VDocuments';
-	$content['method'] = 'showDocAccueil';
+	$content['title'] = 'CatClinick-Projet';
+	$content['class'] = 'VPages';
+	$content['method'] = 'showPage';
 	$content['arg'] = $data;
-  
+	
 	return;
 
 } // home()
-
 
 function connect()
 {
@@ -123,64 +113,102 @@ function admin()
 	$_SESSION['ADMIN'] = true;
 
 	global $content;
+	
 	$content['title'] = 'Connexion';
 	$content['class'] = 'VHtml';
 	$content['method'] = 'showHtml';
 	$content['arg'] = '../Html/form_connect.html';
   
 	return;
-} // admin()
-/**
- * Déconnexion
- *
- * @return none
- */
-function deconnect()
-{
-	//debug($_SESSION);
 	
+} // admin()
+
+function deconnect()
+{	
 	session_unset();
 
 	header('Location: ../Php');
 
 	return;
+	
 } // deconnect()
 
-function fiche($id_fiche = null)
+function admin_fiche()
 {
-	$_SESSION['ID_FICHE'] = isset($_GET['ID_FICHE']) ? $_GET['ID_FICHE'] : $id_fiche;
-	$_SESSION['FICHE_TITRE'] = isset($_GET['FICHE_TITRE']) ? $_GET['FICHE_TITRE'] : $_SESSION['FICHE_TITRE'];
+	unset($_SESSION['ADMIN_DOC']);
+	
+	$_SESSION['ADMIN_FICHE'] = true;
+	
+	global $content;
+	
+	$content['title'] = 'Gestion des fiches';
+	$content['class'] = 'VFiches';
+	$content['method'] = 'showGestionFiche';
+	$content['arg'] = '';
+  
+	return;
+	
+} // admin_fiche()
 
-	$value['ID_FICHE'] = $_SESSION['ID_FICHE'];
-	$mdocuments = new MDocuments();
-	$mdocuments->SetValue($value);
-	$data = $mdocuments->SelectAllDocuments();
+function admin_doc()
+{
+	debug($_GET);
+	debug($_SESSION);
+	unset($_SESSION['ADMIN_FICHE']);
+	
+	$_SESSION['ADMIN_DOC'] = true;
+	
+	global $content;
+	
+	$content['title'] = 'Gestion des documents';
+	$content['class'] = 'VDocuments';
+	$content['method'] = 'showGestionDoc';
+	$content['arg'] = '';
+  
+	return;
+	
+} // admin_doc()
 
+function form_fiche ()
+{
+	debug($_GET);
+	$data = isset($_GET['ID_FICHE']) ? $_GET : '';
+	
 	global $content;
 
-	$content['title'] = 'Liste des Documents';
-	$content['class'] = 'VDocuments';
-	$content['method'] = 'showDocuments';
+	$content['title'] = 'Nouvelle fiche';
+	$content['class'] = 'VFiches';
+	$content['method'] = 'formFiche';
 	$content['arg'] = $data;
 
-	return;
-
-} // fiche()
-
-function form_fiche()
-{
-  $data = isset($_GET['ID_FICHE']) ? $_GET : '';
-	
-  global $content;
-
-  $content['title'] = 'Nouveau fiche';
-  $content['class'] = 'VDocuments';
-  $content['method'] = 'formFiche';
-  $content['arg'] = $data;
-
   return;
-
+  
 } // form_fiche()
+
+function insert_fiche ()
+{
+	debug($_GET);
+	
+	$mcontacts = new MFiches();
+	$mcontacts->SetValue($_POST);
+	$mcontacts->InsertFiche();
+
+	home();
+
+	return;
+		
+} // insert_fiche()
+
+function delete_fiche()
+{
+	$mcontacts = new MFiches($_GET['ID_FICHE']);
+	$mcontacts->DeleteFiche();
+
+	home();
+
+	return;
+	
+} // delete_fiche()
 
 function update_fiche()
 {
@@ -194,312 +222,185 @@ function update_fiche()
 
 } // update_fiche()
 
-function insert_fiche()
+function document($id_docu = null)
 {
-  $mcontacts = new MFiches();
-  $mcontacts->SetValue($_POST);
-  $mcontacts->Insertfiche();
+	debug($_GET);
+	debug($_SESSION);
+	$_SESSION['ID_FICHE'] = isset($_GET['ID_FICHE']) ? $_GET['ID_FICHE'] : $id_docu;
+	$_SESSION['FICHE_TITRE'] = isset($_GET['FICHE_TITRE']) ? $_GET['FICHE_TITRE'] : $_SESSION['FICHE_TITRE'];
 
-  home();
+	$value['ID_FICHE'] = $_SESSION['ID_FICHE'];
+	$mdocuments = new MDocuments();
+	$mdocuments->SetValue($value);
+	$data = $mdocuments->SelectAllDocuments();
 
-  return;
+	global $content;
 
-} // insert_fiche()
-
-function delete_fiche()
-{
-	$mcontacts = new MFiches($_GET['ID_FICHE']);
-	$mcontacts->DeleteFiche();
-
-	home();
+	$content['title'] = 'documents';
+	$content['class'] = 'VDocuments';
+	$content['method'] = 'showDocument';
+	$content['arg'] = $data;
 
 	return;
-
-} // delete_fiche()
+	
+} // document()
 
 function form_document()
 {
-  if (isset($_GET['ID_DOC']))
-  {
-    $mdocuments = new MDocuments($_GET['ID_DOC']);
-    $data['DOCUMENTS'] = $mdocuments->SelectDocument();
-    
-    $data['FICHES'] = $mdocuments->SelectFichesDocuments();
-  }
-  else
-  {
-  	$data['FICHES'][0]['ID_FICHE'] = $_SESSION['ID_FICHE'];
-  }
+	debug($_GET);
+	debug($_SESSION);
+	if (isset($_GET['ID_DOC']))
+	{
+		$mdocuments = new MDocuments($_GET['ID_DOC']);
+		$data['DOCUMENTS'] = $mdocuments->SelectDocument();
+		
+		$data['FICHES'] = $mdocuments->SelectFichesDocuments();
+	}
+	else
+	{
+		$data['FICHES'][0]['ID_FICHE'] = $_SESSION['ID_FICHE'];
+	}
   
-  global $content;
+	global $content;
 	
-  $content['title'] = 'Nouveau document';
-  $content['class'] = 'VDocuments';
-  $content['method'] = 'formDocument';
-  $content['arg'] = $data;
+	$content['title'] = 'Nouveau document';
+	$content['class'] = 'VDocuments';
+	$content['method'] = 'formDocument';
+	$content['arg'] = $data;
   
-  return;
-
+	return;
+		
 } // form_document()
 
 function insert_document()
 {
-  
-  $value['TITRE'] = $_POST['TITRE'];
-  $value['DOCUMENT'] = $_POST['DOCUMENT'];
+	$value['TITRE'] = $_POST['TITRE'];
+	$value['DOCUMENT'] = $_POST['DOCUMENT'];
   	 
-  $mdocuments = new MDocuments();
-  $mdocuments->SetValue($value);
-  $id_doc = $mdocuments->Insert();
+	$mdocuments = new MDocuments();
+	$mdocuments->SetValue($value);
+	$id_doc = $mdocuments->InsertDocument();
   
-  $val['ID_DOC'] = $id_doc;
+	$val['ID_DOC'] = $id_doc;
   
-  foreach ($_POST['ID_FICHE'] as $v)
-  {
-  	$val['ID_FICHE'] = $v;  	 
+	foreach ($_POST['ID_FICHE'] as $v)
+	{
+		$val['ID_FICHE'] = $v;  	 
     
-    $mdocuments->SetValue($val);
-    $mdocuments->InsertFichesDocuments();
-  }
+		$mdocuments->SetValue($val);
+		$mdocuments->InsertFichesDocuments();
+	}
   
-  fiche($_SESSION['ID_FICHE']);
+	home($_SESSION['ID_FICHE']);
 
-  return;
-
+	return;
+	
 } // insert_document()
-
-function update_document()
-{
-  $value['TITRE'] = $_POST['TITRE'];
-  $value['DOCUMENT'] = $_POST['DOCUMENT'];
-  
-  $mdocuments = new MDocuments($_GET['ID_DOC']);
-  $mdocuments->SetValue($value);
-  $mdocuments->UpdateDocument();
-  $mdocuments->DeleteFichesDocuments();
-  
-  foreach ($_POST['ID_FICHE'] as $v)
-  {
-  	$val['ID_FICHE'] = $v;
-  
-  	$mdocuments->SetValue($val);
-  	$mdocuments->InsertFichesDocuments();
-  }
-  
-  fiche($_SESSION['ID_FICHE']);
-  
-  return;
-
-} // update_document()
 
 function delete_document()
 {
-  $mdocuments = new MDocuments($_GET['ID_DOC']);
-  $mdocuments->DeleteDocument();
-  $mdocuments->DeleteFichesDocuments();
-
-  fiche($_SESSION['ID_FICHE']);
+	$mdocuments = new MDocuments($_GET['ID_DOC']);
+	$mdocuments->DeleteDocument();
+	$mdocuments->DeleteFichesDocuments();
+   
+	home($_SESSION['ID_FICHE']);
   
-  return;
+	return;
 
 } // delete_document()
 
-function metier($id_metier = null)
+function update_document()
 {
-	$_SESSION['ID_METIER'] = isset($_GET['ID_METIER']) ? $_GET['ID_METIER'] : $id_metier;
-	$_SESSION['METIER'] = isset($_GET['METIER']) ? $_GET['METIER'] : $_SESSION['METIER'];
-
-	$value['ID_METIER'] = $_SESSION['ID_METIER'];
-	$mdocuments = new MEmployers();
-	$mdocuments->SetValue($value);
-	$data = $mdocuments->SelectAllEmployers();
-
-	global $content;
-
-	$content['title'] = 'Liste des metiers';
-	$content['class'] = 'VDocuments';
-	$content['method'] = 'showMetiers';
-	$content['arg'] = $data;
-
-	return;
-
-} // document()
-
-function form_metier()
-{
-  $data = isset($_GET['ID_METIER']) ? $_GET : '';
-	
-  global $content;
-
-  $content['title'] = 'Nouveau metier';
-  $content['class'] = 'VDocuments';
-  $content['method'] = 'formMetier';
-  $content['arg'] = $data;
-
-  return;
-
-} // form_metier()
-
-function update_metier()
-{
-	$mcontacts = new MMetiers($_GET['ID_METIER']);
-	$mcontacts->SetValue($_POST);
-	$mcontacts->UpdateMetier();
-
-	home();
-
-	return;
-
-} // update_metier()
-
-function delete_metier()
-{
-	$mcontacts = new MMetiers($_GET['ID_METIER']);
-	$mcontacts->DeleteMetier();
-
-	home();
-
-	return;
-
-} // delete_metier()
-
-function insert_metier()
-{
-  $mcontacts = new MMetiers();
-  $mcontacts->SetValue($_POST);
-  $mcontacts->InsertMetier();
-
-  home();
-
-  return;
-
-} // insert_metier()
-
-function form_employer()
-{	
-  if (isset($_GET['ID_EMPLOYER']))
-  { 
-	$memployers = new MEmployers($_GET['ID_EMPLOYER']);
-
-	$data['EMPLOYER'] = $memployers->SelectEmployer();
-    
-    $data['METIERS'] = $memployers->SelectMetierEmployers();
-  }
-  else
-  {
-  	$data['METIERS'][0]['ID_METIER'] = $_SESSION['ID_METIER'];
-  }
+	$value['TITRE'] = $_POST['TITRE'];
+	$value['DOCUMENT'] = $_POST['DOCUMENT'];
   
-  global $content;
-	
-  $content['title'] = 'Nouveau EMPLOYER';
-  $content['class'] = 'VDocuments';
-  $content['method'] = 'formEmployer';
-  $content['arg'] = $data;
-  
-  return;
-
-} // form()
-
-function insert_employer()
-{
-  $value['PRENOM'] = $_POST['PRENOM'];
-  $value['NOM'] = $_POST['NOM'];
-  
-  $memployers = new MEmployers();
-  $memployers->SetValue($value);
-  $id_doc = $memployers->InsertEmployer();
-  
-  $val['ID_EMPLOYER'] = $id_doc;
-  
-  foreach ($_POST['ID_METIER'] as $v)
-  {
-  	$val['ID_METIER'] = $v;  	 
-    
-    $memployers->SetValue($val);
-    $memployers->InsertMetierEmployers();
-  }
-  
-  metier($_SESSION['ID_METIER']);
-
-  return;
-
-} // insert()
-
-function update_employer()
-{	
-  $value['PRENOM'] = $_POST['PRENOM'];
-  $value['NOM'] = $_POST['NOM'];
-  
-  $memployers = new MEmployers($_GET['ID_EMPLOYER']);
-  $memployers->SetValue($value);
-  $memployers->UpdateEmployer();
-  $memployers->DeleteMetierEmployers();
-  
-  foreach ($_POST['ID_METIER'] as $v)
-  {
-  	$val['ID_METIER'] = $v;
-  
-  	$memployers->SetValue($val);
-  	$memployers->InsertMetierEmployers();
-  }
-  
-  metier($_SESSION['ID_METIER']);
-  
-  return;
-
-} // update()
-
-function delete_employer()
-{
-  $memployers = new MEmployers($_GET['ID_EMPLOYER']);
-  $memployers->Delete();
-  $memployers->DeleteMetierEmployers();
-  
-  metier($_SESSION['ID_METIER']);
-  
-  return;
-
-} // delete()
-
-function doc()
-{
 	$mdocuments = new MDocuments($_GET['ID_DOC']);
-	$data = $mdocuments->SelectDocument();
+	$mdocuments->SetValue($value);
+	$mdocuments->UpdateDocument();
+	$mdocuments->DeleteFichesDocuments();
+  
+	foreach ($_POST['ID_FICHE'] as $v)
+	{
+		$val['ID_FICHE'] = $v;
+  
+		$mdocuments->SetValue($val);
+		$mdocuments->InsertFichesDocuments();
+	}
+  
+	home($_SESSION['ID_FICHE']);
+  
+	return;
 	
-	//debug($data);
-	//exit;
+} // update_document()
 
+function admin_spe()
+{
+/*
 	global $content;
 
-	$content['title'] = 'doc';
-	$content['class'] = 'VDocuments';
-	$content['method'] = 'showDoc';
-	$content['arg'] = $data;
+	$content['title'] = 'Gestion des Specialites';
+	$content['class'] = 'VHtml';
+	$content['method'] = 'showHtml';
+	$content['arg'] = '../Html/specialites.html';
 
-	return;	
+	return;
+*/
 }
 
-function document($id_fiche = null)
+function formulaire_specialite()
 {	
-	$_SESSION['ID_FICHE'] = isset($_GET['ID_FICHE']) ? $_GET['ID_FICHE'] : $id_fiche;
-	$_SESSION['FICHE_TITRE'] = isset($_GET['FICHE_TITRE']) ? $_GET['FICHE_TITRE'] : $_SESSION['FICHE_TITRE'];
-	
-	$value['ID_FICHE'] = $_SESSION['ID_FICHE'];	
+	$vhtml = new VHtml();
+	$vhtml->showHtml('../Html/formulaire.html');
+  
+	return;
+  
+} // formulaire_specialite()
+/*
+function insert_Specialites()
+{
+	$mspe = new MSpecialites();
+	$mspe->SetValue($_POST);
+	$value = $mspe->Insert();
 
+	// Envoie au fomat JSON du tableau $value
+	echo json_encode($value);
+
+	return;
+
+} // insert_Specialites()
+*/
+
+
+
+
+
+
+
+/*
+function fiche($id_fiche = null)
+{
+	debug($_GET);
+	$_SESSION['ID_FICHE'] = isset($_GET['ID_FICHE']) ? $_GET['ID_FICHE'] : $id_fiche;
+	$_SESSION['TITRE'] = isset($_GET['TITRE']) ? $_GET['TITRE'] : $_SESSION['TITRE'];
+	
+	$value['ID_FICHE'] = $_SESSION['ID_FICHE'];
 	$mdocuments = new MDocuments();
 	$mdocuments->SetValue($value);
 	$data = $mdocuments->SelectAllDocuments();
 	
+	//debug($data);
+	//exit;
+	
 	global $content;
-
-	$content['title'] = 'Liste des documents';
-	$content['class'] = 'VDocuments';
-	$content['method'] = 'showDocuments';
+	
+	$content['title'] = 'Fiche';
+	$content['class'] = 'VFiches';
+	$content['method'] = 'showFiche';
 	$content['arg'] = $data;
-
+  
 	return;
 	
-} // document()
+} // fiche()
+*/
 
 ?>

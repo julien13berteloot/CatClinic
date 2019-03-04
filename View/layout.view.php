@@ -40,11 +40,12 @@ $vaside = new VAside();
 	</div> <!-- END grid-x -->
 	
 	<?php $vfooter->showFooter() ?>
- 
+
 	<script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/what-input/dist/what-input.js"></script>
     <script src="../node_modules/foundation-sites/dist/js/foundation.js"></script>
     <script src="../js/app.js"></script>
+
 	<script src="../Js/exercice.js"></script>
 </body>
 </html>

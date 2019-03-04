@@ -68,12 +68,19 @@ class MSpecialites
 		return;
   
 	} // SetValue($_value)
-		
+	
+	// Index.php - home()	
 	public function SelectAllSpecialites()
 	{
-		$query = 	'select ID_SPECIALITES, NOM_SPECIALITES
-					from SPECIALITES
-					order by ID_SPECIALITES';
+		$query = 	'
+					select 
+						ID_SPECIALITES, 
+						NOM
+					from 
+						SPECIALITES
+					order by 
+						ID_SPECIALITES
+					';
 
 		$result = $this->conn->prepare($query);
 
