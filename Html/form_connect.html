@@ -1,65 +1,53 @@
-<div class="grid-x ">
-	<div class="cell">
-		<header>
-			<h1>Connexion Administration</h1>
-		</header>	
-	</div>								
-</div>
-<form data-abide novalidate action="../Php/index.php" method="post">
+<section class="ma_cellule_gris"> 
+	<form data-abide novalidate action="../Php/index.php" method="post">
 	<div data-abide-error class="alert callout" style="display: none;">
-		<p><i class="fi-alert"></i>Login ou Mot de passe incorrect.</p>
+		<p><i class="fi-alert"></i> Login ou Mot de passe incorrect.</p>
 	</div>
-	<div class="grid-x ma_cellule_gris">
-		<div class="cell large-8 large-offset-2">
-			<div class="grid-x">
-				<input type="hidden" name="EX" value="connect" />
-				<div class="small-2 cell">
-					<label for="login" class="text-left middle">Login</label>
-				</div>
-				<div class="small-10 cell">			
-					<input id="login" name="LOGIN" value="" type="text" placeholder="login" 
-					aria-describedby="Login" aria-errormessage="ErrorLogin" required pattern="text">
-					<span class="form-error" id="ErrorLogin">
-						Required!
-					</span>	
-					<p class="help-text" id="Login">Entrer un login.</p>		
-				</div>
+		<div class="grid-x">
+			<div class="cell large-8 large-offset-2 medium-8 medium-offset-2 small-12 text-center">
+				<header>
+					<h1 class="h3">Connexion Administration</h1>
+				</header>
+				<div class="grid-x">
+					<input type="hidden" name="EX" value="connect" />
+					<div class="cell large-2 medium-2 small-12">
+						<label for="login" class="text-left middle">Login</label>
+					</div>
+					<div class="cell large-10 medium-10 small-12">			
+						<input id="login" name="LOGIN" value="" type="text" placeholder="login" 
+						aria-describedby="Login" aria-errormessage="ErrorLogin" required pattern="text">
+						<span class="form-error" id="ErrorLogin">
+							Required!
+						</span>	
+						<p class="help-text" id="Login">Entrer un login.</p>		
+					</div>
 				
-				<div class="small-2 cell">
-					<label for="pwd" class="text-left middle">Mot de passe</label>
+					<div class="cell large-2 medium-2 small-12">
+						<label for="pwd" class="text-left middle">Mot de passe</label>
+					</div>
+					<div class="cell large-10 medium-10 small-12">			
+						<input id="pwd" name="PASSWORD" value="" type="password" placeholder="password"
+						aria-describedby="Mdp" aria-errormessage="ErrorPass" required>
+						<span class="form-error" id="ErrorPass">
+							Required!
+						</span>	
+						<p class="help-text" id="Mdp">Entrer un Mot de passe.</p>
+					</div>				
 				</div>
-				<div class="small-10 cell">			
-					<input id="pwd" name="PASSWORD" value="" type="password" placeholder="password"
-					aria-describedby="Mdp" aria-errormessage="ErrorPass" required>
-					<span class="form-error" id="ErrorPass">
-						Required!
-					</span>	
-					<p class="help-text" id="Mdp">Entrer un Mot de passe.</p>
-<!--
-<label>Password Required
-          <input type="password" id="password" placeholder="yeti4preZ" 
-		  aria-describedby="example1Hint2" aria-errormessage="example1Error2" required >
-          <span class="form-error" id="example1Error2">
-            I'm required!
-          </span>
-        </label>
--->					
+			</div>
+			<div class="cell large-12" style="">
+				<div class="grid-x">
+					<div class="cell large-3 large-offset-2">
+						<button class="button large" type="submit" value="Submit">Ok</button>
+					</div>
+					<div class="cell large-7" style="">
+						<button class="button large" type="reset" value="Reset">Annuler</button>
+					</div>
 				</div>	
 			</div>
-		</div>		
-		<div class="cell large-12">
-			<div class="grid-x">
-				<div class="cell large-3 large-offset-2">
-					<button class="button large" type="submit" value="Submit">Ok</button>
-				</div>
-				<div class="cell large-7" style="">
-					<button class="button large" type="reset" value="Reset">Annuler</button>
-				</div>
-			</div>		
-		</div>	
-	</div>
-</form>
-
+		</div>
+	</form>
+</section>
 
 
 

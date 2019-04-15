@@ -1,11 +1,4 @@
 <?php
-/**
- * Affichage du menu
- * @author Christian Bonhomme
- * @version 1.0
- * @package EXAM-CNAM
- *
- */
 class VMenu
 {
 	/**
@@ -35,19 +28,28 @@ class VMenu
 		else
 		{
 			$li .= '<li><a href="../Php/index.php?EX=home">Home</a></li>';
+			$li .= '<li><a href="../Php/index.php?EX=lesfiches">Fiches</a></li>';
+			$li .= '<li><a href="../Php/index.php?EX=lesdocuments">Documents</a></li>';
+			$li .= '<li><a href="../Php/index.php?EX=contact">Contact</a></li>';
 			$li .= '<li><a href="../Php/index.php?EX=admin">Connexion</a></li>';	
 		}
 		
-		//$insert_document = (isset($_SESSION['ADMIN']) && (isset($_SESSION['ID_USER']))) ? '<li><a href="../Php/index.php?EX=form_document">Nouveau document</a></li>' : '';
-	  
-echo'
+		echo'
 	<div class="grid-container">
 	
-		<header id="header" class="header text-center">
-			<p>header</p>
+		<header id="header" class="">		
+			<div class="mon-header grid-x grid-padding-x ma_cellule_gris align-middle hide-for-small-only">
+				<div class="cell large-2 medium-4 small-12">
+					<a href="../Php/index.php"><img src="../img/logo-clinic.jpg" alt="Logo CatClinic"></a>
+				</div>
+				<div class="cell large-8 medium-8 small-12">
+					<p class="lead">Clinique vétériniaire CatClinic</p>
+					<p>Urgences Assurées 24h/24 et 7j/7</p>
+				</div>
+			</div>
 		</header>
 
-		<nav data-sticky-container>
+		<nav data-sticky-container class="mon-menu">
 			<div data-sticky data-margin-top=\'0\' data-top-anchor="header:bottom" data-btm-anchor="id_sticky_content:bottom">
 				<div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium" data-animate="hinge-in-from-top hinge-out-from-top">
 					<button class="menu-icon" type="button" data-toggle="example-menu"></button>
@@ -58,18 +60,15 @@ echo'
 ';	
 echo <<<HERE
 						<ul class="vertical medium-horizontal menu align-center" data-responsive-menu="accordion ">
-							<!--<h1 id="logo" title="Logo"><a href="../Php/index.php?EX=home&amp;ID_USER=$ID_USER">Logo</a></h1>-->
 							$li 
-						
 						</ul>		
-HERE;
-echo '											
+					
 					</div>
 				</div>
 			</div>
 		</nav>
 	
-	';
+HERE;
 	}
   
 } // VMenu

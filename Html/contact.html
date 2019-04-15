@@ -1,0 +1,82 @@
+
+
+ 
+<section class="ma_cellule_gris contact-formulaire">
+	<div class="cell large-12 text-center">
+		<header>
+			<h1 class="h3">Formulaire de contact</h1>
+		</header>	
+	</div>
+	<form onsubmit="return verifForm(this)" id="moncontact">
+		<div class="grid-x">
+			<div class="cell large-8 large-offset-2 small-12">
+				<p class="text-left">
+					<span class=""><strong>Pour nous contacter :</strong></span><br />
+					* champ obligatoire
+				</p>
+								
+				<div class="grid-x">
+									
+					<div class="large-2 medium-2 small-12 cell" style="">
+						<label for="nom" class="text-left middle">Nom * </label>
+					</div>
+					<div class="large-10 medium-10 small-12 cell" style="">			
+						<input class="required" id="nom" type="text" placeholder="nom">	
+					</div>
+
+					<div class="large-2 medium-2 small-12 cell">
+						<label for="prenom" class="text-left middle">Prenom </label>
+					</div>
+					<div class="large-10 medium-10 small-12 cell">			
+						<input id="prenom" type="text" placeholder="prenom">
+					</div>
+										
+					<div class="large-2 medium-2 small-12 cell">
+						<label for="email" class="text-left middle">Email * </label>
+					</div>
+					<div class="large-10 medium-10 small-12 cell">			
+						<input class="required" id="email" type="email" placeholder="Email">
+					</div>
+										
+					<div class="large-12 medium-12 small-12 cell">
+						<label for="message" class="text-left">Votre Message
+							<textarea name="message" id="message" rows="10" placeholder="message"></textarea>
+						</label>
+					</div>	
+					
+				</div>
+										
+			</div>
+				
+			<div class="cell large-12" style="">
+				
+				<div class="grid-x">
+
+					<div class="cell large-3 large-offset-2" style="">
+						<button class="button large" type="submit" value="Submit">Envoyer</button>
+					</div>
+					<div class="cell large-7" style="">
+						<button class="button large" type="reset" value="Reset">Annuler</button>
+					</div>
+
+				</div>	
+					
+			</div>	
+			
+		</div>
+	</form>
+	<div id="error"></div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+

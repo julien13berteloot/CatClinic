@@ -69,7 +69,226 @@ class MDocuments
   
 	} // SetValue($_value)
 	
-	// Index.php - document()
+	// VDocument.php - showGestionDoc() - showLesDocuments()
+	public function SelectAllDocumentsPages()
+	{
+		$query = 	'
+					select 
+						D.ID_DOC, 
+						D.TITRE,
+						D.DOCUMENT,
+						F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+						FICHES F
+					where 
+						FD.ID_DOC = D.ID_DOC
+					and 
+						FD.ID_FICHE = F.ID_FICHE
+					order by 
+						TITRE
+					asc
+					';
+
+		$result = $this->conn->prepare($query);
+
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();
+   
+	} // SelectAllDocumentsPages()
+	
+	// Index.php - document() 
+	public function SelectAllDocuments()
+	{
+		$query = 	'
+					select 
+						D.ID_DOC, 
+						TITRE, 
+						DOCUMENT 
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD
+					where 
+						FD.ID_DOC = D.ID_DOC
+					and 
+						FD.ID_FICHE = :ID_FICHE
+					order by 
+						TITRE
+					';
+
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_FICHE', $this->value['ID_FICHE'], PDO::PARAM_INT);
+  	 
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return $result->fetchAll();
+   
+	} // SelectAllDocuments()
+	
+	// Index.php - form_document() - la_fiche
+	public function SelectDocument()
+	{
+		$query = 	'
+					select 
+						ID_DOC, 
+						TITRE, 
+						DOCUMENT 
+					from 
+						DOCUMENTS
+					where 
+						ID_DOC = :ID_DOC
+					';
+  
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_DOC', $this->id_doc, PDO::PARAM_INT);
+    
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		return $result->fetch();
+  
+	} // SelectDocument()
+	
+	// Index.php - form_document() - la_fiche
+	public function SelectFichesDocuments()
+	{
+		$query = 	'
+					select 
+						ID_FICHE
+					from 
+						FICHES_DOCUMENTS
+					where 
+						ID_DOC = :ID_DOC
+					';
+  
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_DOC',$this->id_doc, PDO::PARAM_INT);
+   	 
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return $result->fetchAll();
+  
+	} // SelectFichesDocuments()
+	
+	// Index.php - insert_document()
+	public function InsertDocument()
+	{
+		$query = 	'
+					insert into 
+						DOCUMENTS (TITRE, DOCUMENT)
+					values
+						(:TITRE, :DOCUMENT)
+					';
+
+		$result = $this->conn->prepare($query);
+    
+		$result->bindValue(':TITRE',$this->value['TITRE'], PDO::PARAM_STR);
+		$result->bindValue(':DOCUMENT',$this->value['DOCUMENT'], PDO::PARAM_STR);
+     
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		$this->id_doc = $this->conn->LastInsertId();
+ 
+		return $this->id_doc;
+    
+	} // InsertDocument()
+	
+	// Index.php - insert_document() - update_document()
+	public function InsertFichesDocuments()
+	{
+		$query = 	'
+					insert into 
+						FICHES_DOCUMENTS (ID_FICHE, ID_DOC)
+					values
+						(:ID_FICHE,:ID_DOC)
+					';
+  
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':ID_DOC',$this->id_doc, PDO::PARAM_INT);
+		$result->bindValue(':ID_FICHE',$this->value['ID_FICHE'], PDO::PARAM_INT);
+   	 
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return;
+  
+	} // InsertFichesDocuments()
+	
+	// Index.php - delete_document() - update_document()
+	public function DeleteFichesDocuments()
+	{
+		$query = 	'
+					delete from 
+						FICHES_DOCUMENTS
+					where 
+						ID_DOC = :ID_DOC
+					';
+  
+		$result = $this->conn->prepare($query);
+  
+		$result->bindValue(':ID_DOC',$this->id_doc, PDO::PARAM_INT);
+  	  	
+		$result->execute() or die ($this->ErrorSQL($result));
+  	
+		return;
+  
+	} // DeleteFichesDocuments()
+	
+	// Index.php - update_document()
+	public function UpdateDocument()
+	{
+		$query = 	'
+					update 
+						DOCUMENTS
+					set 
+						TITRE = :TITRE,
+						DOCUMENT = :DOCUMENT
+					where 
+						ID_DOC = :ID_DOC
+					';
+
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_DOC', $this->id_doc, PDO::PARAM_INT);
+		$result->bindValue(':TITRE', $this->value['TITRE'], PDO::PARAM_STR);
+		$result->bindValue(':DOCUMENT',$this->value['DOCUMENT'], PDO::PARAM_STR);
+    
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		return;
+  
+	} // UpdateDocument()
+	
+	// Index.php - delete_document()
+	public function DeleteDocument()
+	{
+		$query = 	'
+					delete from 
+						DOCUMENTS
+					where 
+						ID_DOC = :ID_DOC
+					';
+  
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_DOC', $this->id_doc, PDO::PARAM_INT);
+    
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		return;
+       
+	} // DeleteDocument()
+	
+
+	
+	
+	
+/*	
+	// Index.php - document() - fiche()
 	public function SelectAllDocuments()
 	{
 		$query = 	'
@@ -142,7 +361,7 @@ class MDocuments
   	
 		return $result->fetchAll();
   
-	} // SelectThemesDocuments()
+	} // SelectFichesDocuments()
 	
 	// Index.php - insert_document()
 	public function InsertDocument()
@@ -253,8 +472,36 @@ class MDocuments
   
 	} // UpdateDocument()
 
+	// Index.php - lesdocuments() - showLesDocuments()
+	public function SelectAllDocumentsPages()
+	{
+		$query = 	'
+					select 
+						D.ID_DOC, 
+						D.TITRE,
+						D.DOCUMENT,
+						F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+						FICHES F
+					where 
+						FD.ID_DOC = D.ID_DOC
+					and 
+						FD.ID_FICHE = F.ID_FICHE
+					order by 
+						TITRE
+					asc
+					';
 
+		$result = $this->conn->prepare($query);
 
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();
+   
+	} // SelectAllDocumentsPages()
+*/
 
 
 

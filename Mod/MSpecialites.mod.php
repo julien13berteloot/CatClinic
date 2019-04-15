@@ -89,6 +89,88 @@ class MSpecialites
 		return $result->fetchAll();
    
 	} // SelectAllSpecialites()
+	
+	public function Insert()
+	{				
+		$query = 	"
+					insert into 
+						SPECIALITES (NOM)
+					values
+						(:NOM)
+					";									
+		  
+		$result = $this->conn->prepare($query);
+			
+		$result->bindValue(':NOM', $this->value['NOM'], PDO::PARAM_STR);
+			
+		$result->execute();
+
+		$this->id_specialites = $this->conn->lastInsertId();
+
+		$this->value['ID_SPECIALITES'] = $this->id_specialites;
+			
+		return $this->value;
+			
+	} // Insert()
+	
+	public function SelectSpecialite()
+	{
+		$query =   	'
+					select 
+						ID_SPECIALITES,
+						NOM
+					from
+						SPECIALITES
+					where 
+						ID_SPECIALITES = ' . $this->id_specialites;
+		    
+		$result = $this->conn->prepare($query);
+		    
+		$result->execute();
+		    
+		return $result->fetch();
+		    
+	} // SelectSpecialite()
+	
+	public function Update()
+	{
+		$NOM = $this->value['NOM'];
+			
+		$query = 	"
+					update 
+						SPECIALITES
+					set 
+						NOM = '$NOM'
+					where 
+						ID_SPECIALITES = $this->id_specialites
+					";
+			  
+		$result = $this->conn->prepare($query);
+	  
+		$result->execute();
+		
+		return;
+		
+	} // Update()
+	
+	public function Delete()
+	{
+		$query = 	'
+					delete from 
+						SPECIALITES
+					where 
+						ID_SPECIALITES = :ID_SPECIALITES
+					';
+  
+		$result = $this->conn->prepare($query);
+
+		$result->bindValue(':ID_SPECIALITES', $this->id_specialites, PDO::PARAM_INT);
+    
+		$result->execute() or die ($this->ErrorSQL($result));
+    
+		return;
+       
+	} // Delete()
 		
 	
 }	

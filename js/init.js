@@ -1,27 +1,27 @@
 /**
- * Fichier Javascript d'initialisation des écouteurs
+ * Fichier Javascript d'initialisation des Ã©couteurs
  * @author Christian Bonhomme
  * @version 1.0
  * @package EXERCICE-MOOC
  */
 
 /**
- * Fonction générique de déclenchement des listeners
- * @param HTMLElement élément à écouter
- * @param array tableau des objets de type événement
- * @param function fonction déclenchée par l'écouteur
+ * Fonction gÃ©nÃ©rique de dÃ©clenchement des listeners
+ * @param HTMLElement Ã©lÃ©ment Ã  Ã©couter
+ * @param array tableau des objets de type Ã©vÃ©nement
+ * @param function fonction dÃ©clenchÃ©e par l'Ã©couteur
  *
  * @return none
  */
 function Listener(elem ,event, fnct) 
 {
-  // Teste si l'élément existe
+  // Teste si l'Ã©lÃ©ment existe
   if (elem)
   {
-    // Associe à  l'événement click la fonction (Non IE)
+    // Associe Ã Â  l'Ã©vÃ©nement click la fonction (Non IE)
     elem.addEventListener(event , fnct, false);
 		
-    // Si l'événement est un click on change le curseur de souris
+    // Si l'Ã©vÃ©nement est un click on change le curseur de souris
     if ('click' == event) 
     { 
       elem.style.cursor = 'pointer';
@@ -33,16 +33,16 @@ function Listener(elem ,event, fnct)
 } // Listener(elem ,event, fnct)
 
 /**
- * Fonction d'arrêt de la propagation d'un événement dans la phase de bouillonnement
- * @param event événement
+ * Fonction d'arrÃªt de la propagation d'un Ã©vÃ©nement dans la phase de bouillonnement
+ * @param event Ã©vÃ©nement
  *
  * return none;
  */
 function stopEvent(event)
 {
-  // Stoppe la propagation de l'événement (pas de bouillonnement)
+  // Stoppe la propagation de l'Ã©vÃ©nement (pas de bouillonnement)
   event.stopPropagation();
-  // Remet l'événement à false
+  // Remet l'Ã©vÃ©nement Ã  false
   event.preventDefault();
    
   return;
@@ -50,10 +50,10 @@ function stopEvent(event)
 } // stopEvent(event)
 
 /**
- * Fonction générique de supppression des listeners
- * @param HTMLElement élément à ne plus écouter
- * @param array tableau des objets de type événement
- * @param function fonction déclenchée par l'écouteur
+ * Fonction gÃ©nÃ©rique de supppression des listeners
+ * @param HTMLElement Ã©lÃ©ment Ã  ne plus Ã©couter
+ * @param array tableau des objets de type Ã©vÃ©nement
+ * @param function fonction dÃ©clenchÃ©e par l'Ã©couteur
  *
  * @return none
  */
@@ -61,10 +61,10 @@ function Remove(elem, event, fnct)
 {
   if (elem)
   {
-    // Associe à  l'événement click la fonction (Non IE)
+    // Associe Ã Â  l'Ã©vÃ©nement click la fonction (Non IE)
     elem.removeEventListener(event, fnct, false);
  		
-    // Si l'événement est un click on change le curseur de souris
+    // Si l'Ã©vÃ©nement est un click on change le curseur de souris
     if ('click' == event) 
     { 
       elem.style.cursor = 'default';
@@ -76,15 +76,34 @@ function Remove(elem, event, fnct)
 } // Remove(elem, event, fnct)
 
 /************************************************/
-/* Initialistion des écouteurs de l'application */
+/* Initialistion des Ã©couteurs de l'application */
 /* au chargement des pages                      */
 /************************************************/
 
-// Récupère l'élément <p id="contacts">
+
 var click_spe = document.querySelector('#specialites');
-// Pour l'élément <p id="contacts">
-// on associe un événement click
-// avec comme fonction associée une fonction anonyme
-// déclenchant la fonction changeContent
-Listener(click_spe, 'click', function(){changeContent('content', '../Php/index.php', 'EX=formulaire_specialite', 'initFormSpe()')});
+
+Listener(click_spe, 'click', function(){changeContent('id_sticky_content', '../Php/index.php', 'EX=formulaire_specialite', 'initFormSpe()')});
+
+
+var click_doc = document.querySelector('#docteur');
+
+Listener(click_doc, 'click', function(){changeContent('id_sticky_content', '../Php/index.php', 'EX=formulaire_docteur', 'initFormDocteur()')});
+
+
+var click_asv = document.querySelector('#asv');
+
+Listener(click_asv, 'click', function(){changeContent('id_sticky_content', '../Php/index.php', 'EX=formulaire_asv', 'initFormAsv()')});
+
+
+var click_docteur = document.getElementById('lienboxdocteur');
+Listener(click_docteur, 'click', boxDocteur);
+var click_box_docteur = document.getElementById('boxdocteur');
+Listener(click_box_docteur, 'click', boxDocteur)
+
+
+var click_ass = document.getElementById('lienboxasv');
+Listener(click_ass, 'click', boxAsv);
+var click_box_ass = document.getElementById('boxasv');
+Listener(click_box_ass, 'click', boxAsv)
 

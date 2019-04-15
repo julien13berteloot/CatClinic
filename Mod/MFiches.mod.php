@@ -70,38 +70,8 @@ class MFiches
 		return;
   
 	} // SetValue($_value)
-	
-	// Index.php - home()
-	public function SelectAllFicheDocuement()
-	{
-		$query =	'
-					select 
-						D.ID_DOC, 
-						D.TITRE, 
-						D.DOCUMENT,
-						F.ID_FICHE,
-                        F.FICHE_TITRE
-					from 
-						DOCUMENTS D, 
-						FICHES_DOCUMENTS FD,
-                        FICHES F
-					where
-						FD.ID_DOC = D.ID_DOC
-					and 	
-						FD.ID_FICHE = F.ID_FICHE
-					order by 
-						F.FICHE_TITRE
-					';
-		
-		$result = $this->conn->prepare($query);
 
-		$result->execute() or die ($this->Error($result));
-  
-		return $result->fetchAll();		
-					
-	}	// SelectAllFicheDocuement()
-	
-	// VAside - showAside() 
+	// VAside - showAside() - VDocument - formDocument($_data)
 	public function SelectAllTitresFiches()
 	{
 		$query = 	'
@@ -121,40 +91,21 @@ class MFiches
 		return $result->fetchAll();
    
 	} // SelectAllTitresFiches()
-
-	// VDocument - formDocument($_data)
-	public function SelectAllFiche()
-	{
-		$query = 	'
-					select 
-						ID_FICHE, FICHE_TITRE
-					from 
-						FICHES
-					order by 
-						FICHE_TITRE
-					';
-
-		$result = $this->conn->prepare($query);
-
-		$result->execute() or die ($this->Error($result));
-  
-		return $result->fetchAll();
-   
-	} // SelectAll()
 	
 	// Index.php - insert_fiche ()
 	public function InsertFiche()
 	{
 		$query = 	'
 					insert into 
-						FICHES (FICHE_TITRE)
+						FICHES (FICHE_TITRE,IMAGE)
 					values
-						(:FICHE_TITRE)
+						(:FICHE_TITRE, :IMAGE)
 					';
 	 
 		$result = $this->conn->prepare($query);
 	  
 		$result->bindValue(':FICHE_TITRE', $this->value['FICHE_TITRE'], PDO::PARAM_STR);
+		$result->bindValue(':IMAGE', $this->value['IMAGE'], PDO::PARAM_STR);
 	  
 		$result->execute() or die ($this->Error($result));
 		
@@ -205,10 +156,177 @@ class MFiches
   
 	} // UpdateFiche()
 	
+	// Index.php - home() - lesfiches()
+	public function SelectAllFichePage()
+	{
+		$query =	'
+					select 
+						D.ID_DOC, 
+						D.TITRE, 
+						D.DOCUMENT,
+						F.ID_FICHE,
+                        F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+                        FICHES F
+					where
+						FD.ID_DOC = D.ID_DOC
+					and 	
+						FD.ID_FICHE = F.ID_FICHE
+					order by 
+						F.FICHE_TITRE
+					';
+		
+		$result = $this->conn->prepare($query);
+
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();		
+					
+	}	// SelectAllFichePage()
+	
+	// Index.php - home()
+	public function SelectAvantDerniereFiche()
+	{				
+		$query =	'
+					select
+						D.ID_DOC, 
+						D.TITRE, 
+						D.DOCUMENT,
+						F.ID_FICHE,
+                        F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+                        FICHES F
+					where
+						FD.ID_DOC = D.ID_DOC
+					and 	
+						FD.ID_FICHE = F.ID_FICHE 	
+					
+					order by 
+						D.ID_DOC 
+					desc 
+					limit 1,1
+					';
+		
+		$result = $this->conn->prepare($query);
+
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();		
+					
+	}	// SelectAvantDerniereFiche()
+	
+	// Index.php - home()
+	public function SelectDerniereFiche()
+	{				
+		$query =	'
+					select
+						D.ID_DOC, 
+						D.TITRE, 
+						D.DOCUMENT,
+						F.ID_FICHE,
+                        F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+                        FICHES F
+					where
+						FD.ID_DOC = D.ID_DOC
+					and 	
+						FD.ID_FICHE = F.ID_FICHE 	
+					
+					order by 
+						D.ID_DOC 
+					desc 
+					limit 0,1
+					';
+		
+		$result = $this->conn->prepare($query);
+
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();		
+					
+	}	// SelectDerniereFiche()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	// Index.php - home() - lesfiches()
+	public function SelectAllFichePage()
+	{
+		$query =	'
+					select 
+						D.ID_DOC, 
+						D.TITRE, 
+						D.DOCUMENT,
+						F.ID_FICHE,
+                        F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+                        FICHES F
+					where
+						FD.ID_DOC = D.ID_DOC
+					and 	
+						FD.ID_FICHE = F.ID_FICHE
+					order by 
+						F.FICHE_TITRE
+					';
+		
+		$result = $this->conn->prepare($query);
+
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();		
+					
+	}	// SelectAllFichePage()
+	*/
+	/*
+	public function SelectLaFiche()
+	{				
+		$query =	'
+					select
+						D.ID_DOC, 
+						D.TITRE, 
+						D.DOCUMENT,
+						F.ID_FICHE,
+                        F.FICHE_TITRE
+					from 
+						DOCUMENTS D, 
+						FICHES_DOCUMENTS FD,
+                        FICHES F
+					where
+						FD.ID_DOC = D.ID_DOC
+					and 	
+						FD.ID_FICHE = F.ID_FICHE 	
+					and 	
+						F.ID_FICHE = :ID_FICHE
+					';
+		
+		$result = $this->conn->prepare($query);
+		
+		$result->bindValue(':ID_FICHE', $this->value['ID_FICHE'], PDO::PARAM_INT);
+
+		$result->execute() or die ($this->Error($result));
+  
+		return $result->fetchAll();		
+					
+	}	// SelectLaFiche()
+	*/
 	
 	private function ErrorSQL($result)
 	{
-		// Récupère le tableau des erreurs
 		$error = $result->errorInfo();
   	 
 		echo 'TYPE_ERROR = ' . $error[0] . '<br />';

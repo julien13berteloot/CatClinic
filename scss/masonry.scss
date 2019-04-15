@@ -1,0 +1,50 @@
+$masonry-marge: $global-margin;
+
+
+.masonry-spe
+{
+
+	//width:100%;
+	column-count: 1;
+	column-gap: $masonry-marge;
+  
+	.callout 
+	{
+		background-color:$monGris;
+		padding:30px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	@include breakpoint(400px) 
+	{
+		column-count: 2;
+	}
+
+	@include breakpoint(600px) 
+	{
+		column-count: 3;
+	}
+
+	@include breakpoint(800px) 
+	{
+		column-count: 4;
+	}
+
+	@include breakpoint(1100px) 
+	{
+		column-count: 4;
+	}
+}
+
+.masonry-spe-item 
+{
+	break-inside: avoid;
+	margin-bottom: $masonry-marge;
+}
+
+
+
+
+
+

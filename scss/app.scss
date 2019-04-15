@@ -62,3 +62,169 @@
 // Motion UI
 @include motion-ui-transitions;
 @include motion-ui-animations;
+
+@import 'fichedocument.scss';
+@import 'employer.scss';
+@import 'localisation.scss';
+@import 'contact.scss';
+@import 'masonry.scss';
+@import 'footer.scss';
+@import 'menu.scss';
+
+
+$sectionPadding: 50px;
+$bordure-Bleu: 5px solid $monbleu;
+$bordure-Gris: 3px solid $monGris;
+$bordure-Bleu-epaisse: 5px solid $monbleu;
+
+.ma_margin
+{
+	margin: auto;
+}
+.table-texte
+{
+	padding-bottom: 15px;
+}
+
+/*----------------------------------------------------------------------
+						HEADER
+------------------------------------------------------------------------*/
+.mon-header
+{
+	padding: 20px 0;
+}
+/*----------------------------------------------------------------------
+						SECTION - CELLULE
+------------------------------------------------------------------------*/
+.ma-grille-principal
+{
+	border-right: 3px solid $monbleu; 
+	border-left: 3px solid $monbleu;
+}
+section
+{
+	padding-top: $sectionPadding;
+	padding-bottom: $sectionPadding;
+}
+.section-no-padding
+{
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.bordure_section_haut
+{
+	border-top: $bordure-Orange;
+}
+.bordure_section_bas
+{
+	border-bottom: $bordure-Orange;
+}
+.ma_cellule_bleu
+{
+	background-color: $monbleu;  
+}
+.ma_cellule_gris
+{
+	background-color: $monGris;
+}
+.ma_cellule_blanche
+{
+	background-color: $white;
+}
+.ma_bordure_bottom_bleu
+{
+	border-bottom: $bordure-Bleu;
+}
+/*----------------------------------------------------------------------
+						FICHE - HOME
+------------------------------------------------------------------------*/
+.fiche-home
+{
+	.gestion-image-fiche-home
+	{
+		align-self: center;
+		flex: 1 0 100%;
+		
+		background-color: $monbleu;
+			
+		@media screen and (min-width: 40em) 
+		{
+		  flex: 1 0 50%;
+		}		
+	}
+
+	h2.gestion-titre-fiche-home
+	{
+		line-height: 0.8;
+	}
+	.gestion-titre-fiche-home a
+	{
+		width: 100%;
+		font-size: 18px;
+		color: $black;
+		transition: all .5s ease;
+
+		&:hover
+		{
+			color: $monbleu;
+		}
+	}
+	.gestion-sous-titre-fiche-home a
+	{
+		font-size: 13px;
+		font-weight: bold;
+		color: $monbleu;
+		transition: all .5s ease;	
+		&:hover
+		{
+			color: $black;
+		}
+	}
+	.gestion-image-fiche-home 
+	{
+		background: $monbleu;
+	}
+	.gestion-image-fiche-home img 
+	{
+		opacity: 1;
+		transform: scale(1);
+		transition: all .5s ease;
+	}
+	.gestion-image-fiche-home:hover img 
+	{
+		opacity: .5;
+		transform: scale(0.98);
+	}
+	.gestion-texte-home
+	{
+		height: 70px;
+		max-height: 70px;	
+		overflow: hidden;
+		text-overflow: ellipsis;
+		height: 70px;
+		//width:100%;
+		//background-color: red;	
+	}	
+	
+}
+.gestion-contenu-fiche-home
+{
+	//padding: 2rem;
+	padding: 30px 10px;
+    flex: 1 0 100%;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+	background-color: $monGris;
+	
+	@media screen and (min-width: 40em) 
+	{
+		flex: 1 0 50%;
+		font-weight: normal;
+
+		//background-color: red;	
+    }
+}
+

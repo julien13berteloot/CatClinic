@@ -1,0 +1,86 @@
+.affichage_fiche_doc
+{
+	.gestion-image-fiche 
+	{
+		background-color: $monbleu;
+		img 
+		{
+			opacity: 1;
+			transform: scale(1);
+			transition: all .5s ease;
+		}
+		&:hover img 
+		{
+			opacity: .5;
+			transform: scale(0.98);
+		}
+	}
+	.gestion-titre-fiche 
+	{
+		margin-top: 20px;
+		height: 50px;
+		max-height: 50px;
+		//background-color: blue;		
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 18px;
+		a 
+		{
+			color: $monbleu;
+		}
+	}	
+	.gestion-sous-titre-fiche
+	{
+		height: 45px;
+		max-height: 45px;
+		//background-color: pink;		
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 16px;
+		color: $black;
+	}
+	.gestion-texte
+	{
+		margin-right:20px;
+		margin-left:20px;
+		height: 75px;
+		max-height: 75px;
+		//background-color: green;		
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 12px;
+		color: $black;	
+	}
+	.effet-survol-image 
+	{
+		position: relative;
+		color: $white;
+		text-align: left;
+
+		.effet-contenu 
+		{
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			transition: all 0.4s ease-in;
+			opacity: 0;
+			padding: 20px 30px;	
+		}	
+		&:hover .effet-contenu 
+		{
+			opacity: 1;
+		} 
+		.effet-contenu h2
+		{
+			//font-size: 18px;
+		}
+	}
+	.gestion-fiche
+	{
+		margin-bottom:20px; 
+		color:$monbleu;
+	}
+} 

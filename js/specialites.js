@@ -39,7 +39,7 @@ function submitSpe(event)
   var rep = actionForm('../Php/index.php?EX=insert_Specialites', this);
 
   // Remplace le contenu de <div id="content" par l'affichage des contacts
-  changeContent('content', '../Php/index.php?EX=specialites', '', 'initSpes()');
+  changeContent('id_sticky_content', '../Php/index.php?EX=specialites', '', 'initSpes()');
   
   return;
 	
@@ -80,7 +80,7 @@ function initSpes()
  */ 
 function adminContactSpe()
 {
-  changeContent('content', '../Php/index.php?EX=admin_Specialites', '', 'initAdminSpe()');
+  changeContent('id_sticky_content', '../Php/index.php?EX=admin_Specialites', '', 'initAdminSpe()');
   
   return;
   
@@ -133,7 +133,7 @@ function initAdminSpe()
   // on associe un événement click
   // avec comme fonction associée une fonction anonyme
   // qui affiche les contacts
-  Listener(click_button_normal, 'click', function(){changeContent('content', '../Php/index.php?EX=specialites', '', 'initSpes()')});
+  Listener(click_button_normal, 'click', function(){changeContent('id_sticky_content', '../Php/index.php?EX=specialites', '', 'initSpes()')});
   
   return;
   
@@ -271,7 +271,7 @@ function updateContactspe(event)
   // On appelle la fonction actionForm2
   var rep = actionFormSpecialite('../Php/index.php?EX=update_Specialites', frm, name, value);
   
-  changeContent('content', '../Php/index.php', 'EX=admin_Specialites');
+  changeContent('id_sticky_content', '../Php/index.php', 'EX=admin_Specialites');
   
    return;
   
@@ -359,7 +359,7 @@ function deleteContactspe(event)
   // On appelle la fonction actionForm2
   var rep = actionFormSpecialite('../Php/index.php?EX=delete_Specialites', frm, name, value);
   
-  changeContent('content', '../Php/index.php', 'EX=admin_Specialites');
+  changeContent('id_sticky_content', '../Php/index.php', 'EX=admin_Specialites');
   
    return;
   

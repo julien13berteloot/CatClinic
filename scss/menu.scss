@@ -1,0 +1,48 @@
+$bordure-Orange: 3px solid $monOrange;
+
+.mon-menu
+{
+	.top-bar
+	{
+		border-bottom: $bordure-Orange;
+	}
+	.menu a 
+	{
+		padding-right: 40px;
+		padding-left: 40px;
+		&:hover
+		{
+			background-color: $white;		
+			transition: all 0.5s ease;
+			padding-right: 40px;
+			padding-left: 40px;
+		}
+	}
+	.anim-menu 
+	{
+		width: 100%;
+		.menu .mon-effet 
+		{
+			position: relative;
+			&::after 
+			{
+				content: "";
+				position: absolute;
+				top: calc(100% - 0.125rem);
+				border-bottom: $bordure-Bottom-Menu;
+				left: 50%;
+				right: 50%;
+				margin: 0;
+				transition: all 0.5s ease;
+			}
+			&:hover::after 
+			{
+			left: 0%;
+			right: 0%;
+			transition: all 0.5s ease;
+			border-bottom: $bordure-Bottom-Menu;
+			}	
+		}
+	}
+
+}

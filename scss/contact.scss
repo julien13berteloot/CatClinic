@@ -1,0 +1,37 @@
+
+
+.contact-formulaire
+{
+	.required {
+		background-color: #fdd;
+	}
+
+	#error {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: none;
+		border: 2px solid #738dc0;
+		border-radius: 15px;
+		background-color: #fee;
+		padding: 10px;
+		text-align: left;
+		box-shadow: 8px 8px 8px #738dc0;
+		.monlabel {
+			padding-left: 10px;
+			font-weight: bold;
+		}
+	}
+
+	.norequired {
+		border: 1px solid #f00;
+		box-shadow: 1px 1px 2px #f00;
+	}
+
+	button {
+		padding: 10px;
+		background-color: $monbleu;
+		color: $white;
+	}
+}
+

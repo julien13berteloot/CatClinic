@@ -30,8 +30,8 @@ $vaside = new VAside();
 
 	<?php $caroussel->showCaroussel() ?>
 	
-	<div id="id_sticky_aside" class="grid-x ma-grille-principal">
-		<aside class="cell large-3 right" data-sticky-container>
+	<div  class="grid-x ma-grille-principal">
+		<aside class="cell large-3" data-sticky-container>
 			<?php $vaside->showAside()?>
 		</aside> <!-- END aside -->
 		<div id="id_sticky_content" class="cell large-9">

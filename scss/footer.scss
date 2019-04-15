@@ -1,0 +1,29 @@
+$bordure-Bottom-Menu: 0.125rem solid $white;
+
+.mon-footer
+{
+	padding-top : 20px;
+	h1, p, li
+	{
+		color : $white;
+	}
+	h1
+	{
+		padding-bottom : 20px;
+	}
+	.padding-footer
+	{
+		padding : 20px; 
+	}
+	.border-footer
+	{
+		border-right : $bordure-Bottom-Menu;
+		border-left : $bordure-Bottom-Menu;
+		
+		@media screen and (max-width: 39.9375em) 
+		{
+			border-right : 0;
+			border-left : 0;
+		}
+	}
+}

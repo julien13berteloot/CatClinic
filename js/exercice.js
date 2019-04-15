@@ -10,7 +10,11 @@ var i = 0;
 
 src[i++] = '../Js/ajax.js';
 src[i++] = '../Js/specialites.js';
+src[i++] = '../Js/docteur.js';
+src[i++] = '../Js/asv.js';
 src[i++] = '../Js/init.js';
+src[i++] = '../Js/form.js';
+src[i++] = '../Js/contact.js';
 
 for (var j = 0; j < i; ++j)
 {

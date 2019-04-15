@@ -98,6 +98,7 @@ function actionForm(url, frm)
 
 } // actionForm(url, frm)
 
+
 function actionFormSpecialite(url, frm, name, value)
 {
   // Récupère la connexion au serveur http
@@ -136,3 +137,108 @@ function actionFormSpecialite(url, frm, name, value)
   return JSON.parse(xhr.responseText);
 
 } // actionForm2(url, frm, name, value)
+
+
+function actionFormDocteur(url, frm, name, value)
+{
+  // Récupère la connexion au serveur http
+  var xhr = new XMLHttpRequest();
+
+  //Ouvre la connexion en mode synchrone avec le serveur http à l'adresse url
+  xhr.open('POST', url, false);
+
+  //Récupère les données du formulaire sous la forme clef/valeur
+  var data = new FormData(frm);
+  
+  // Récupère le nom d'identifiant (nombre de ligne modifiée)
+  var nb_id_employer = name['ID_DOCTEUR'].length;
+
+  // Boucle sur le tableau des identifants
+  for (var i = 0; i < nb_id_employer; ++i)
+  {
+	// Ajoute l'identifiant et sa valeur
+	data.append(name['ID_DOCTEUR'][i], value['ID_DOCTEUR'][i]);	  
+	
+	// Teste si le nom a été modifié
+	if (name['NOM'][i])
+	{
+		// Ajoute du NOM et sa valeur
+		data.append(name['NOM'][i], value['NOM'][i]);
+	}
+	
+	// Teste si le prénom a été modifié
+	if (name['PRENOM'][i])
+	{
+		// Ajoute du PRENOM et sa valeur
+		data.append(name['PRENOM'][i], value['PRENOM'][i]);
+	}
+  }
+
+  // Envoie les données du formulaire
+  xhr.send(data);
+  
+  // Debuggage
+  if (DEBUG_AJAX) alert(xhr.responseText);
+
+  // La réponse  au format json devient un objet javascript
+  return JSON.parse(xhr.responseText);
+
+} // actionFormDocteur(url, frm, name, value)
+
+
+ function actionFormAsv(url, frm, name, value)
+{
+  // Récupère la connexion au serveur http
+  var xhr = new XMLHttpRequest();
+
+  //Ouvre la connexion en mode synchrone avec le serveur http à l'adresse url
+  xhr.open('POST', url, false);
+
+  //Récupère les données du formulaire sous la forme clef/valeur
+  var data = new FormData(frm);
+  
+  // Récupère le nom d'identifiant (nombre de ligne modifiée)
+  var nb_id_employer = name['ID_ASV'].length;
+
+  // Boucle sur le tableau des identifants
+  for (var i = 0; i < nb_id_employer; ++i)
+  {
+	// Ajoute l'identifiant et sa valeur
+	data.append(name['ID_ASV'][i], value['ID_ASV'][i]);	  
+	
+	// Teste si le nom a été modifié
+	if (name['NOM'][i])
+	{
+		// Ajoute du NOM et sa valeur
+		data.append(name['NOM'][i], value['NOM'][i]);
+	}
+	
+	// Teste si le prénom a été modifié
+	if (name['PRENOM'][i])
+	{
+		// Ajoute du PRENOM et sa valeur
+		data.append(name['PRENOM'][i], value['PRENOM'][i]);
+	}
+  }
+
+  // Envoie les données du formulaire
+  xhr.send(data);
+  
+  // Debuggage
+  if (DEBUG_AJAX) alert(xhr.responseText);
+
+  // La réponse  au format json devient un objet javascript
+  return JSON.parse(xhr.responseText);
+
+} // actionFormDocteur(url, frm, name, value)
+
+
+
+
+
+
+
+
+
+
+

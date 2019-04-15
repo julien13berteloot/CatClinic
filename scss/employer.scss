@@ -1,0 +1,69 @@
+$bordure-Bleu-epaisse: 5px solid $monbleu;
+
+
+.section_picto 
+{
+	text-align: center;
+	padding: 2rem 0;
+	
+	.text_picto
+	{
+		//background-color:red;
+		height: 90px;
+		max-height: 90px;
+		margin: 10px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.bordure-bleu-picto
+	{
+		border:$bordure-Bleu-epaisse;
+		margin-bottom:10px;
+		background-color:$white;
+	}
+	
+	.picto
+	{
+		width:110px; 
+		height:110px; 
+		border-radius:110px; 
+		position: relative;
+		display: inline-block;
+		text-align: center;
+		//background-color:green;
+		font-size:70px; 
+		color:$monbleu;
+	}
+	
+	i.taille-icons
+	{
+		@include absolute-center; 
+	}
+	
+	i.taille-icons_fleche
+	{
+		color:$monbleu;
+		font-size:90px;
+	}
+	
+	.mon-lien
+	{
+		font-weight: bold;
+		min-height:80px;
+	}
+	
+	#boxdocteur
+	{
+		display: none;
+	}
+}
+
+
+
+
+
+
+
+
+

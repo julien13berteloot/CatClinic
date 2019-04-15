@@ -1,15 +1,7 @@
 <?php
-/**
- * Fichier d'inclusion des constantes et des fonctions
- * dont à besoin l'application en particulier l'Autoload
- * @author Christian Bonhomme
- * @version 1.0
- * @package EXAM-CNAM
- */
-
 // Constantes pour la Base de données
 define('DEBUG', true);
-define('DATABASE', 'mysql:host=localhost;dbname=julien');
+define('DATABASE', 'mysql:host=localhost;dbname=julien;charset=utf8');
 define('LOGIN', 'root');
 define('PASSWORD', '');
 
@@ -19,8 +11,10 @@ $path = str_replace('Inc', 'Upload', realpath('../Inc')) . '/';
 define('UPLOAD', $path);
 
 // Récupère le chemin absolu du répertoire Inc
-// et le transforme pour le répertoire Img
-$path = str_replace('Inc', 'Img', realpath('../Inc')) . '/';
+$realpath = realpath('../Inc') . '/';
+
+// Transforme le chemin absolu du répertoire Inc pour le répertoire Img
+$path = str_replace('Inc', 'Img', $realpath);
 define('IMG', $path);
 
 /**
@@ -45,35 +39,21 @@ function __autoload($class)
 
 } // __autoload($class)
 
-/**
- * Mise en forme d'un fichier pour le téléchargement
- * @param array correspondant au nom du fichier téléchargé
- *
- * @return string fichier mis en forme
- */
-function upload($file)
+function strip_xss(&$val)
 {
-  // Découpe $file['name'] en tableau avec comme séparateur le point
-  $tab = explode('.', $file['name']);
+  // Teste si $val est un tableau
+  if (is_array($val))
+  {
+    // Si $val est un tableau, on réapplique la fonction strip_xss()
+    array_walk($val, 'strip_xss');
+  }
+  else if (is_string($val))
+  {
+    // Si $val est une string, on filtre avec strip_tags()
+    $val = strip_tags($val, '<strong>');
+  }
 
-  // Transforme les caractères accentués en entités HTML
-  $fichier = htmlentities($tab[0], ENT_NOQUOTES);
-
-  // Remplace les entités HTML pour avoir juste le premier caractères non accentués
-  $fichier = preg_replace('#&([A-za-z])(?:acute|grave|circ|uml|tilde|ring|cedil|lig|orn|slash|th|eg);#', '$1', $fichier);
-
-  // Elimination des caractères non alphanumériques
-  $fichier = preg_replace('#\W#', '', $fichier);
-
-  // Troncation du nom de fichier à 25 caractères
-  $fichier = substr($fichier, 0, 25);
-
-  // Ajout du time devant le fichier pour obtenir un fichier unique
-  $fichier = time() . '_' . $fichier . '.pdf';
-
-  return $fichier;
-
-} // upload($file)
+} // strip_xss(&$val)
 
 // Visualisation des erreurs
 if (DEBUG)
